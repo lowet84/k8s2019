@@ -15,4 +15,7 @@ spec:
       port: 443
       nodePort: 30443
       name: https
+    - protocol: TCP
+      port: 8080
+      name: webui
   type: NodePort
