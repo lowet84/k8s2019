@@ -31,3 +31,18 @@ spec:
         - --kubernetes
         - --logLevel=INFO
         - --web
+        - --configfile=/toml/traefik-public.toml
+        volumeMounts:
+        - name: toml
+          mountPath: "/toml/traefik-public.toml"
+          readOnly: true
+        - name: traefik-keys
+          mountPath: /config
+      volumes:
+      - name: toml
+        secret:
+          secretName: traefik-toml
+      - name: traefik-keys
+        hostPath:
+          path: /traefik
+          type: Directory
