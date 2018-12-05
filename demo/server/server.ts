@@ -3,8 +3,10 @@ var app = express()
  
 var number = '#'+Math.floor(Math.random()*16777215).toString(16);
 
-app.get('/', function (req, res) {
+app.get('/color', function (req, res) {
   res.send(`${number}`)
 })
  
+app.use(express.static('web'))
+
 app.listen(3000)
