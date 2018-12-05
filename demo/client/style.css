@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+.test{
+    color: white;
+}
+
+.root{
+    background: rgb(39, 39, 39);
+    height: 100vh;
+    width: 100vw;
+}

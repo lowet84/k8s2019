@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "parcel build --target=node --bundle-node-modules server.ts && parcel build client/index.html --out-dir dist/web",
-    "start": "npm run build && cd dist && node server.js"
+    "dev": "npm run build && concurrently \"node dist/server.js dev\" \"parcel client/dev.html --port 1111\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^4.1.0",
     "parcel": "^1.10.3",
     "typescript": "^3.2.1"
   },
