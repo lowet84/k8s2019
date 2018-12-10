@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo-service
+spec:
+  selector:
+    name: demo-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      name: web

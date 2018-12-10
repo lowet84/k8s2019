@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: demo-ingress
+spec:
+  rules:
+  - host: demo.fredriklowenhamn.com
+    http:
+      paths:
+      - backend:
+          serviceName: demo-service
+          servicePort: 3000
