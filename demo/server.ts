@@ -25,13 +25,16 @@ var updateColor = function(){
     r--;
     g++;
   }
-  if(g > 0 && r == 0){
+  else if(g > 0 && r == 0){
     g--;
     b++;
   }
-  if(b > 0 && g == 0){
+  else if(b > 0 && g == 0){
     r++;
     b--;
+  }
+  else{
+    r--
   }
 }
 

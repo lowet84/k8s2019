@@ -1,20 +1,39 @@
 import { html, render, TemplateResult } from 'lit-html'
 
-const root: TemplateResult = html`
-  <div id="root" class="root"></div>
+var colorData = {}
+
+const template = items => html`
+  <div class="root">
+    ${
+      items.map(
+        d => html`
+          <div
+            class="item"
+            style="background:rgb(${d.color.r},${d.color.g},${d.color.b})"
+          ></div>
+        `
+      )
+    }
+  </div>
 `
 
 window.onload = () => {
   const el = document.body
-  render(root, el)
-  test('/api')
+
+  window.setInterval(function() {
+    color()
+    var items = Object.keys(colorData).map(d => colorData[d])
+    render(template(items), el)
+  }, 100)
 }
 
-var test = async (path: string) => {
-  var url = (window['api'] || '') + path
+var color = async () => {
+  var url = (window['api'] || '') + '/api'
   var value = await fetch(url).catch(error => console.log(error))
   if (!value) return
-  var root = document.getElementById('root')
   var data = await value.json()
-  root.style.backgroundColor = `rgb(${data.color.r},${data.color.g},${data.color.b})`
+  colorData[data.id] = data
+  // root.style.backgroundColor = `rgb(${data.color.r},${data.color.g},${
+  //   data.color.b
+  // })`
 }
