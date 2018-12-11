@@ -16,25 +16,34 @@ if (process.argv[2] === 'dev') {
 }
 
 var id = Math.floor(Math.random() * 16777215)
-var r = Math.floor(Math.random() * 255)
-var g = Math.floor(Math.random() * 255)
-var b = Math.floor(Math.random() * 255)
 
-var updateColor = function(){
-  if(r > 0 && b == 0){
-    r--;
-    g++;
-  }
-  else if(g > 0 && r == 0){
-    g--;
-    b++;
-  }
-  else if(b > 0 && g == 0){
-    r++;
-    b--;
-  }
-  else{
+var zeroColor = Math.floor(Math.random() * 3)
+var spread = Math.floor(Math.random() * 255)
+var colors = [0, 0, 0]
+colors[zeroColor % 3] = 0
+colors[(zeroColor + 1) % 3] = spread
+colors[(zeroColor + 2) % 3] = 255 - spread
+
+console.log(zeroColor)
+console.log(spread)
+console.log(colors)
+
+var r = colors[0]
+var g = colors[1]
+var b = colors[2]
+
+var updateColor = function() {
+  if (r > 0 && b == 0) {
     r--
+    g++
+  }
+  if (g > 0 && r == 0) {
+    g--
+    b++
+  }
+  if (b > 0 && g == 0) {
+    r++
+    b--
   }
 }
 
