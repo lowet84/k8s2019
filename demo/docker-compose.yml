@@ -1,7 +1,15 @@
 version: '3'
 services:
   demo:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     image: lowet84/k8s2019-demo:amd64
     ports:
       - 3000:3000
+
+  demo-arm:
+    build: 
+      context: .
+      dockerfile: Dockerfile-arm
+    image: lowet84/k8s2019-demo:arm
