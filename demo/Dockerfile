@@ -12,8 +12,7 @@ ADD client client/
 
 RUN npm run build
 
-FROM alpine
-RUN apk add --no-cache nodejs
+FROM node:10-alpine
 COPY --from=build /app/dist /app
 WORKDIR /app
 CMD node server.js
