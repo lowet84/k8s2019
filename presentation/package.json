@@ -2,13 +2,27 @@
   "name": "presentation",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "electron": "electron .",
+    "parcel": "parcel --target=electron --public-url ./ src/index.html",
+    "start": "run-p -l parcel electron"
+  },
+  "build": {
+    "files": [
+      "dist"
+    ]
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^1.10.3"
+    "electron": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "parcel-bundler": "^1.11.0",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "electron-reload": "^1.4.0",
+    "reveal.js": "^3.7.0"
   }
 }

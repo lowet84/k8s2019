@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "rootDir": "./src",
+      "sourceMap": true,
+      "target": "es2018",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "noImplicitAny": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "allowSyntheticDefaultImports": true
+    }
+  }

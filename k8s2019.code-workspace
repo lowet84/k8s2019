@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "path": "presentation"
+    }
+  ],
+  "settings": {
+    "prettier.singleQuote": true,
+    "prettier.semi": false,
+    "files.exclude": {
+      "**/.git": true,
+      "**/node_modules": true,
+      "**/out": true,
+      "**/.cache": true,
+      "**/dist": true,
+    },
+  },
+}
