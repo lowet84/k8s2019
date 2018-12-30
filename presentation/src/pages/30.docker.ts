@@ -7,9 +7,9 @@ const page = html`
         <img src="../assets/docker.svg" class="image-small" />
     </section>
     <section>
-        <h2>Två familjer av problem</h2>
-        <div class="fragment"></div>
-        <div class="fragment"></div>
+        <h3>Vad är Docker?</h3>
+        <div class="fragment">App-virtualisering</div>
+        <div class="fragment">sdfijsdklfji</div>
     </section>
     
   </section>
