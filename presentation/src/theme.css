@@ -1,0 +1,53 @@
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 20px 0;
+  color: #fff;
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  text-shadow: none;
+  word-wrap: break-word;
+}
+
+.reveal h1 {
+  font-size: 2.5em;
+}
+
+.reveal h2 {
+  font-size: 1.6em;
+}
+
+.reveal h3 {
+  font-size: 1.3em;
+}
+
+.reveal h4 {
+  font-size: 1em;
+}
+
+.reveal h1 {
+  text-shadow: none;
+}
+
+.image-small{
+  width: 3em;
+  height: 3em;
+  margin: 1em !important;
+  border: 0 !important;
+  background: rgb(54, 54, 54) !important;
+  box-shadow: none !important;
+  padding: 0.4em !important;
+}
+
+.image-bar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
