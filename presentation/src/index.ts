@@ -1,6 +1,5 @@
-import { render } from '../node_modules/lit-html'
-import root from './components/root'
-
+import { render, html, TemplateResult } from '../node_modules/lit-html'
+import root from './pages/0.root'
 
 document.addEventListener('DOMContentLoaded', function(event) {
   const el = document.getElementById("slides")
