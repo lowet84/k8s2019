@@ -86,6 +86,7 @@ var randomizeDevEvents = function() {
   var rnd = Math.floor(Math.random() * chance)
   if (rnd == 0 || rnd == 1) {
     if(hits[rnd]>hits[(rnd+1)%1]+5) rnd = (rnd+1)%1
+    if(items.length<=1) rnd = 1
     if (rnd == 0) {
       hits[0]++
       items.splice(0, 1)
@@ -95,7 +96,6 @@ var randomizeDevEvents = function() {
       items.push(new ColorCounter(devNames[index], generateColor()))
     }
   }
-  console.log(hits)
 }
 
 app.get('/api', function(req, res) {
