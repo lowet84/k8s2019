@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "presentation"
+    },
+    {
+      "path": "demo"
     }
   ],
   "settings": {

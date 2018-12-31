@@ -9,7 +9,7 @@ const template = items => html`
         d => html`
           <div class="item ">
             <div class="box item--faded" style="${getStyle(d)}"></div>
-            <div class="caption">${d.id}</div>
+            <div class="caption">${d.id} ${d.name}</div>
           </div>
         `
       )
