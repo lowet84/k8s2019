@@ -49,19 +49,18 @@ window.onload = () => {
   const el = document.body
 
   window.setInterval(function() {
-    color()
+    getColorFromServer()
     var items = Object.keys(colorData).map(d => colorData[d])
     var sorted = items.reduce((acc, item) => {
       if (acc[item.name] == undefined) acc[item.name] = {}
       acc[item.name][item.id] = item
       return acc
     }, {})
-    console.log(sorted)
     render(template(sorted), el)
   }, 100)
 }
 
-var color = async () => {
+var getColorFromServer = async () => {
   var url = (window['api'] || '') + '/api'
   var value = await fetch(url).catch(error => console.log(error))
   if (!value) return
