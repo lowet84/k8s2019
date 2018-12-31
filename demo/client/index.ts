@@ -5,14 +5,27 @@ var colorData = {}
 const template = items => html`
   <div class="root">
     ${
-      items.map(
-        d => html`
-          <div class="item ">
-            <div class="box item--faded" style="${getStyle(d)}"></div>
-            <div class="caption">${d.id} ${d.name}</div>
-          </div>
-        `
-      )
+      Object.keys(items)
+        .sort((a, b) => a.localeCompare(b))
+        .map(
+          d => html`
+            <div class="category">
+              <div>${d}</div>
+              <div class="category-content">
+                ${
+                  Object.keys(items[d]).map(
+                    e => html`
+                      <div
+                        class="box item--faded"
+                        style="${getStyle(items[d][e])}"
+                      ></div>
+                    `
+                  )
+                }
+              </div>
+            </div>
+          `
+        )
     }
   </div>
 `
@@ -20,12 +33,12 @@ const template = items => html`
 var getStyle = data => {
   var time: any = new Date()
   var diff = time - data.time
-  var seconds = 20
-  var factor = (((seconds * 1000)) - diff + 400) / (seconds * 1000)
+  var seconds = 8
+  var factor = (seconds * 1000 - diff + 400) / (seconds * 1000)
   if (factor > 1) factor = 1
 
-  if(factor<0.05) delete colorData[data.id]
-  
+  if (factor < 0.05) delete colorData[data.id]
+
   var r = data.color.r * factor
   var g = data.color.g * factor
   var b = data.color.b * factor
@@ -38,7 +51,13 @@ window.onload = () => {
   window.setInterval(function() {
     color()
     var items = Object.keys(colorData).map(d => colorData[d])
-    render(template(items), el)
+    var sorted = items.reduce((acc, item) => {
+      if (acc[item.name] == undefined) acc[item.name] = {}
+      acc[item.name][item.id] = item
+      return acc
+    }, {})
+    console.log(sorted)
+    render(template(sorted), el)
   }, 100)
 }
 

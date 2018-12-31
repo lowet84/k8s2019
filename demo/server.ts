@@ -80,24 +80,34 @@ var getCounter = function(): number {
   return counter
 }
 
+var hits = [0, 0]
 var randomizeDevEvents = function() {
   var chance = 100
   var rnd = Math.floor(Math.random() * chance)
-  if(rnd == 0){
-    var index = Math.floor(Math.random() * items.length)
-    items.splice(index,1)
+  if (rnd == 0 || rnd == 1) {
+    if(hits[rnd]>hits[(rnd+1)%1]+5) rnd = (rnd+1)%1
+    if (rnd == 0) {
+      hits[0]++
+      items.splice(0, 1)
+    }if (rnd == 1) {
+      hits[1]++
+      var index = Math.floor(Math.random() * devNames.length)
+      items.push(new ColorCounter(devNames[index], generateColor()))
+    }
   }
-  else if(rnd==1){
-    var index = Math.floor(Math.random() * devNames.length)
-    items.push(new ColorCounter(devNames[index], generateColor()))
-  }
+  console.log(hits)
 }
 
 app.get('/api', function(req, res) {
   if (dev) {
     randomizeDevEvents()
   }
+
   var item = items[getCounter()]
+  if (!item) {
+    console.log('error')
+    res.send(null)
+  }
   item.updateColor()
   res.send({ id: item.id, color: item.color, name: item.name })
 })
