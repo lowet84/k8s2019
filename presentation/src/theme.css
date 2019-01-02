@@ -35,7 +35,7 @@
   text-shadow: none;
 }
 
-.image-small{
+.image-small {
   width: 3em;
   height: 3em;
   margin: 1em !important;
@@ -45,9 +45,13 @@
   padding: 0.4em !important;
 }
 
-.image-bar{
+.image-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.dark {
+  color: #fff !important;
 }

@@ -11,7 +11,8 @@
   "build": {
     "files": [
       "dist",
-      "assets"
+      "assets",
+      "node_modules"
     ]
   },
   "author": "",

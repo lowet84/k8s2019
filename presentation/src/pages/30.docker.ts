@@ -9,7 +9,14 @@ const page = html`
     <section>
         <h3>Vad är Docker?</h3>
         <div class="fragment">App-virtualisering</div>
-        <div class="fragment">sdfijsdklfji</div>
+        <div class="fragment">Paketering</div>
+        <div class="fragment">Deployment</div>
+    </section>
+    <section>
+        <h3>Docker run</h3>
+        <div class="fragment">App-virtualisering</div>
+        <div class="fragment">Paketering</div>
+        <div class="fragment">Deployment</div>
     </section>
     
   </section>
