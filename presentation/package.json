@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "electron": "electron .",
-    "parcel": "parcel --target=electron --public-url ./ src/index.html",
+    "parcel": "parcel --target=electron --public-url ./ --bundle-node-modules src/index.html",
     "start": "run-p -l parcel electron"
   },
   "build": {

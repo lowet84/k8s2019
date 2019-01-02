@@ -1,4 +1,4 @@
-import { html } from '../../node_modules/lit-html'
+import { html } from 'lit-html'
 
 const page = html`
   <section>

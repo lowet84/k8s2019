@@ -1,4 +1,4 @@
-import { render, html, TemplateResult } from '../node_modules/lit-html'
+import { render, html, TemplateResult } from 'lit-html'
 import root from './pages/0.root'
 
 document.addEventListener('DOMContentLoaded', function(event) {
