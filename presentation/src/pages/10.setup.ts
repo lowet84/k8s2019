@@ -1,4 +1,12 @@
 import { html } from '../../node_modules/lit-html'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
+
+const filename = 'settings.json'
+const loadSettings = () => {
+  console.log('loading settings')
+}
+
+var data: { username: string }
 
 const page = html`
   <section>
@@ -7,11 +15,11 @@ const page = html`
       <div>Ssh private key</div>
       <div><button class="button">Select key</button></div>
     </section>
+    <section>
+      <div>Username</div>
+      <textarea onchange="window.save()">dslijsdf</textarea>
+    </section>
   </section>
 `
-
-var key = undefined
-
-const loadsettings = () => {}
 
 export default page
