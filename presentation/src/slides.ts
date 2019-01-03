@@ -1,6 +1,4 @@
-import { writeFileSync, existsSync, mkdirSync, readFileSync } from 'fs'
-import { join } from 'path'
-import { render, html, TemplateResult } from 'lit-html'
+import { render, html } from 'lit-html'
 
 interface Settings {
   username: string
@@ -15,7 +13,9 @@ var root = (data: Settings) => html`
     <section><h3>Setup</h3></section>
     <section>
       <h4>Username</h4>
-      <textarea></textarea>
+      <button onclick="document.dispatchEvent(new Event('load-key'))">
+        Load key
+      </button>
     </section>
   </section>
 
@@ -74,6 +74,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
   reveal.initialize()
 })
 
-document.addEventListener('my-event', function(e: any) {
-  render(root(settings), el)
+document.addEventListener('load-key', function(e: Event) {
+  console.log(window)
 })
