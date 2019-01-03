@@ -7,9 +7,11 @@
     "electron:start": "electron .",
     "electron:build": "electron-builder",
     "parcel:start": "parcel --target=electron --public-url ./ --bundle-node-modules src/slides/slides.html",
+    "parcel:start-setup": "parcel --target=electron --public-url ./ --bundle-node-modules src/setup/setup.html",
     "parcel:build": "parcel build --target=electron --public-url ./ --bundle-node-modules src/slides/slides.html",
-    "start": "run-p -l parcel:start electron:start",
-    "build": "npm run parcel:build && npm run electron:build"
+    "parcel:build-setup": "parcel build --target=electron --public-url ./ --bundle-node-modules src/setup/setup.html",
+    "start": "run-p -l parcel:start parcel:start-setup electron:start",
+    "build": "npm run parcel:build && npm run parcel:build-setup && npm run electron:build"
   },
   "build": {
     "files": [
