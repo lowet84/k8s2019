@@ -75,5 +75,5 @@ document.addEventListener('DOMContentLoaded', function(event) {
 })
 
 document.addEventListener('load-key', function(e: Event) {
-  console.log(window)
+  const {dialog} = require('electron').remote;
 })
