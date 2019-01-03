@@ -4,21 +4,31 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "electron": "electron .",
-    "parcel": "parcel --target=electron --public-url ./ --bundle-node-modules src/index.html",
-    "start": "run-p -l parcel electron"
+    "electron:start": "electron .",
+    "electron:build": "electron-builder",
+    "parcel:start": "parcel --target=electron --public-url ./ --bundle-node-modules src/index.html",
+    "parcel:build": "parcel build --target=electron --public-url ./ --bundle-node-modules src/index.html",
+    "start": "run-p -l parcel:start electron:start",
+    "build": "npm run parcel:build && npm run electron:build"
   },
   "build": {
     "files": [
       "dist",
       "assets",
-      "node_modules"
-    ]
+      "node_modules",
+      "main.js"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "electron": "^4.0.0",
+    "electron-builder": "^20.38.4",
     "lit-html": "^0.14.0",
     "lit-html-element": "^0.9.1",
     "npm-run-all": "^4.1.5",
