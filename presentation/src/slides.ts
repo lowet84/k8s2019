@@ -2,19 +2,21 @@ import { writeFileSync, existsSync, mkdirSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { render, html, TemplateResult } from 'lit-html'
 
-var root = (data: any) => html`
+interface Settings {
+  username: string
+}
+
+var settings: Settings = {
+  username: ''
+}
+
+var root = (data: Settings) => html`
   <section>
-    <h3>Setup</h3>
-    <div>
-      <button
-        class="button"
-        onclick="{
-  window.location.href='./setup.html'
-}"
-      >
-        Change settings
-      </button>
-    </div>
+    <section><h3>Setup</h3></section>
+    <section>
+      <h4>Username</h4>
+      <textarea></textarea>
+    </section>
   </section>
 
   <section>
@@ -56,22 +58,22 @@ var root = (data: any) => html`
 
 var el: HTMLElement
 document.addEventListener('DOMContentLoaded', function(event) {
-  const filename = join('settings.json')
-  const dir = 'settings'
-  const path = join(dir, filename)
-  var json: any = {}
-  if (existsSync(path)) {
-    var data = readFileSync(path, 'utf8')
-    json = JSON.parse(data)
-  }
+  // const filename = join('settings.json')
+  // const dir = 'settings'
+  // const path = join(dir, filename)
+  // var json: any = {}
+  // if (existsSync(path)) {
+  //   var data = readFileSync(path, 'utf8')
+  //   json = JSON.parse(data)
+  // }
 
   el = document.getElementById('slides')
-  render(root(json), el)
+  render(root(settings), el)
 
   const reveal = require('reveal.js/js/reveal')
   reveal.initialize()
 })
 
 document.addEventListener('my-event', function(e: any) {
-  render(root({ key: 'hej' }), el)
+  render(root(settings), el)
 })
