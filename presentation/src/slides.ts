@@ -32,8 +32,8 @@ var root = (data: Settings) => html`
       <div>${data.keyPair ? 'Key loaded' : 'No key'}</div>
     </section>
     <section>
-      <h4>Private key</h4>
-      
+      <h4>Username</h4>
+      <input type="text" value="${data.username}" class="input" oninput="document.dispatchEvent(new CustomEvent('username',{detail:this.value}))">
     </section>
   </section>
 
@@ -75,8 +75,6 @@ var root = (data: Settings) => html`
 `
 
 var update = () => {
-  console.log('saving settings')
-  console.log(settings)
   electronSettings.set('settings', JSON.stringify(settings))
   render(root(settings), el)
 }
@@ -128,5 +126,10 @@ document.addEventListener('generate-key', function(e: Event) {
 
 document.addEventListener('delete-key', function(e: Event) {
   settings.keyPair = undefined
+  update()
+})
+
+document.addEventListener('username', function(e: CustomEvent) {
+  settings.username = e.detail
   update()
 })
