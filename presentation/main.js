@@ -1,7 +1,7 @@
 const { app, BrowserWindow, globalShortcut } = require('electron')
 require('electron-reload')(__dirname)
 
-var present = process.argv[2] === 'present'
+var dev = process.argv[2] === 'dev'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -14,7 +14,7 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      devTools: !present
+      devTools: dev
     }
   })
 
@@ -22,8 +22,8 @@ function createWindow() {
   win.loadFile('dist/slides.html')
 
   // Open the DevTools.
-  if (present) win.setMenu(null)
-  else win.webContents.openDevTools()
+  if (dev) win.webContents.openDevTools()
+  else win.setMenu(null)
 
   // Emitted when the window is closed.
   win.on('closed', () => {

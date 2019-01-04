@@ -4,13 +4,13 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "electron:start": "electron .",
+    "electron:start": "electron . dev",
     "electron:build": "electron-builder",
     "parcel:start": "parcel --target=node --public-url ./ --bundle-node-modules src/slides.html",
     "parcel:build": "parcel build --target=node --public-url ./ --bundle-node-modules --no-source-maps src/slides.html",
     "start": "run-p -l parcel:start electron:start",
     "build": "npm run parcel:build && npm run electron:build",
-    "present": "npm run parcel:build && electron . present"
+    "present": "npm run parcel:build && electron ."
   },
   "build": {
     "files": [
