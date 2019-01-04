@@ -32,16 +32,17 @@
     "@vue/component-compiler-utils": "^2.4.0",
     "electron": "^4.0.0",
     "electron-builder": "^20.38.4",
+    "electron-reload": "^1.4.0",
     "electron-settings": "^3.2.0",
     "keypair": "^1.0.1",
     "lit-html": "^0.14.0",
     "lit-html-element": "^0.9.1",
     "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.11.0",
+    "reveal.js": "^3.7.0",
     "typescript": "^3.2.2",
     "vue": "^2.5.21",
     "vue-template-compiler": "^2.5.21",
-    "electron-reload": "^1.4.0",
-    "reveal.js": "^3.7.0"
+    "vue-typed": "^2.1.4"
   }
 }
