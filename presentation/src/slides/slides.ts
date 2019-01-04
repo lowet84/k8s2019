@@ -15,7 +15,10 @@ var settings: Settings
 
 var root = (data: Settings) => html`
   <section>
-    <section><h3>Setup</h3></section>
+    <section>
+      <h3>Setup</h3>
+      <div><button onclick="{window.location.href='./setup.html'}">Setup</button></div>
+    </section>
     <section>
       <h4>Private key</h4>
       <div>

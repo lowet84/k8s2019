@@ -6,17 +6,18 @@
   "scripts": {
     "electron:start": "electron . dev",
     "electron:build": "electron-builder",
-    "parcel:start": "parcel --target=node --public-url ./ --bundle-node-modules src/slides.html",
-    "parcel:build": "parcel build --target=node --public-url ./ --bundle-node-modules --no-source-maps src/slides.html",
-    "start": "run-p -l parcel:start electron:start",
-    "build": "npm run parcel:build && npm run electron:build",
+    "parcel:start-slides": "parcel --target=node --public-url ./ --bundle-node-modules src/slides/slides.html",
+    "parcel:start-setup": "parcel --target=node --public-url ./ --bundle-node-modules src/setup/setup.html",
+    "parcel:build-slides": "parcel build --target=node --public-url ./ --bundle-node-modules --no-source-maps src/slides/slides.html",
+    "parcel:build-setup": "parcel build --target=node --public-url ./ --bundle-node-modules --no-source-maps src/setup/setup.html",
+    "start": "run-p -l parcel:start-slides parcel:start-setup electron:start",
+    "build": "npm run parcel:build-slides && npm run parcel:build-setup && npm run electron:build",
     "present": "npm run parcel:build && electron ."
   },
   "build": {
     "files": [
       "assets",
       "main.js",
-      "dev.env",
       "dist"
     ],
     "win": {
@@ -39,9 +40,7 @@
     "parcel-bundler": "^1.11.0",
     "typescript": "^3.2.2",
     "vue": "^2.5.21",
-    "vue-template-compiler": "^2.5.21"
-  },
-  "dependencies": {
+    "vue-template-compiler": "^2.5.21",
     "electron-reload": "^1.4.0",
     "reveal.js": "^3.7.0"
   }
