@@ -1,6 +1,8 @@
 import { render, html } from 'lit-html'
 // @ts-ignore
 const { dialog } = window.require('electron').remote
+// @ts-ignore
+const electronSettings = window.require('electron').remote.require('electron-settings')
 
 interface Settings {
   username: string
@@ -63,14 +65,7 @@ var root = (data: Settings) => html`
 
 var el: HTMLElement
 document.addEventListener('DOMContentLoaded', function(event) {
-  // const filename = join('settings.json')
-  // const dir = 'settings'
-  // const path = join(dir, filename)
-  // var json: any = {}
-  // if (existsSync(path)) {
-  //   var data = readFileSync(path, 'utf8')
-  //   json = JSON.parse(data)
-  // }
+  electronSettings.set('test','value')
 
   el = document.getElementById('slides')
   render(root(settings), el)
