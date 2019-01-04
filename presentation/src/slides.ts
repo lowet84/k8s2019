@@ -1,4 +1,6 @@
 import { render, html } from 'lit-html'
+// @ts-ignore
+const { dialog } = window.require('electron').remote
 
 interface Settings {
   username: string
@@ -13,9 +15,12 @@ var root = (data: Settings) => html`
     <section><h3>Setup</h3></section>
     <section>
       <h4>Username</h4>
-      <button onclick="document.dispatchEvent(new Event('load-key'))">
-        Load key
-      </button>
+      <div>
+        <button onclick="document.dispatchEvent(new Event('load-key'))">
+          Load key
+        </button>
+      </div>
+      <div>${data.username}</div>
     </section>
   </section>
 
@@ -75,5 +80,16 @@ document.addEventListener('DOMContentLoaded', function(event) {
 })
 
 document.addEventListener('load-key', function(e: Event) {
-  const {dialog} = require('electron').remote;
+  dialog.showOpenDialog(
+    {
+      properties: ['openFile'],
+      filters: [{ name: 'PuTTY Private key', extensions: ['ppk'] }]
+    },
+    function(files: string[]) {
+      if (files !== undefined) {
+        settings.username = files[0]
+        render(root(settings), el)
+      }
+    }
+  )
 })
