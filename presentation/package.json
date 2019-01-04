@@ -28,11 +28,9 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@vue/component-compiler-utils": "^2.4.0",
-    "electron": "^4.0.0",
-    "electron-builder": "^20.38.4",
+  "dependencies": {
     "electron-reload": "^1.4.0",
+    "@vue/component-compiler-utils": "^2.4.0",
     "electron-settings": "^3.2.0",
     "keypair": "^1.0.1",
     "lit-html": "^0.14.0",
@@ -44,5 +42,9 @@
     "vue": "^2.5.21",
     "vue-template-compiler": "^2.5.21",
     "vue-typed": "^2.1.4"
+  },
+  "devDependencies": {
+    "electron-builder": "^20.38.4",
+    "electron": "^4.0.0"
   }
 }
