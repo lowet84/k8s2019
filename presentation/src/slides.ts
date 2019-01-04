@@ -8,6 +8,7 @@ const electronSettings = window
 
 interface Settings {
   username: string
+  keyPair: { privateKey: string; publicKey: string }
 }
 
 var settings: Settings
@@ -16,13 +17,23 @@ var root = (data: Settings) => html`
   <section>
     <section><h3>Setup</h3></section>
     <section>
-      <h4>Username</h4>
+      <h4>Private key</h4>
       <div>
+        <button onclick="document.dispatchEvent(new Event('generate-key'))">
+          Generate
+        </button>
         <button onclick="document.dispatchEvent(new Event('load-key'))">
           Load key
         </button>
+        <button onclick="document.dispatchEvent(new Event('delete-key'))">
+          Delete
+        </button>
       </div>
-      <div>${data.username}</div>
+      <div>${data.keyPair ? 'Key loaded' : 'No key'}</div>
+    </section>
+    <section>
+      <h4>Private key</h4>
+      
     </section>
   </section>
 
@@ -64,15 +75,24 @@ var root = (data: Settings) => html`
 `
 
 var update = () => {
-  electronSettings.set('settings', settings)
+  console.log('saving settings')
+  console.log(settings)
+  electronSettings.set('settings', JSON.stringify(settings))
   render(root(settings), el)
 }
 
 var el: HTMLElement
 document.addEventListener('DOMContentLoaded', function(event) {
-  settings = electronSettings.get('settings')
-  if(!settings) settings = {
-    username: ''
+  var json = electronSettings.get('settings')
+  if (!json) {
+    console.log('generating initial settings')
+    settings = {
+      username: '',
+      keyPair: undefined
+    }
+  }
+  else{
+    settings = JSON.parse(json)
   }
   el = document.getElementById('slides')
   update()
@@ -94,4 +114,19 @@ document.addEventListener('load-key', function(e: Event) {
       }
     }
   )
+})
+
+document.addEventListener('generate-key', function(e: Event) {
+  var keypair = require('keypair')
+  var pair = keypair()
+  settings.keyPair = {
+    privateKey: pair.private,
+    publicKey: pair.public
+  }
+  update()
+})
+
+document.addEventListener('delete-key', function(e: Event) {
+  settings.keyPair = undefined
+  update()
 })
