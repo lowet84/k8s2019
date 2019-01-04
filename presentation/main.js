@@ -1,18 +1,20 @@
-const { app, BrowserWindow } = require('electron')
-
+const { app, BrowserWindow, globalShortcut } = require('electron')
 require('electron-reload')(__dirname)
+const config = require('electron-config-env').config
+var dev = config.dev === 'true'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
+let fullScreen = false
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      devTools: true
+      devTools: dev
     }
   })
 
@@ -20,7 +22,7 @@ function createWindow() {
   win.loadFile('dist/slides.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  if (dev) win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -28,6 +30,11 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     win = null
+  })
+
+  globalShortcut.register('Alt+Enter', () => {
+    fullScreen = !fullScreen
+    win.setFullScreen(fullScreen)
   })
 }
 

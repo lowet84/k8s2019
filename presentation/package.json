@@ -9,14 +9,16 @@
     "parcel:start": "parcel --target=node --public-url ./ --bundle-node-modules src/slides.html",
     "parcel:build": "parcel build --target=node --public-url ./ --bundle-node-modules src/slides.html",
     "start": "run-p -l parcel:start electron:start",
-    "build": "npm run parcel:build && npm run electron:build"
+    "build": "npm run parcel:build && npm run electron:build",
+    "present": "npm run parcel:build && npm run electron:start"
   },
   "build": {
     "files": [
       "dist",
       "assets",
       "node_modules",
-      "main.js"
+      "main.js",
+      "dev.env"
     ],
     "win": {
       "target": [
@@ -40,6 +42,7 @@
   },
   "dependencies": {
     "electron-reload": "^1.4.0",
+    "electron-config-env": "^1.5.0",
     "reveal.js": "^3.7.0"
   }
 }
