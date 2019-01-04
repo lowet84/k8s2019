@@ -1,16 +1,16 @@
 import { render, html } from 'lit-html'
 // @ts-ignore
 const { dialog } = window.require('electron').remote
-// @ts-ignore
-const electronSettings = window.require('electron').remote.require('electron-settings')
+const electronSettings = window
+  // @ts-ignore
+  .require('electron')
+  .remote.require('electron-settings')
 
 interface Settings {
   username: string
 }
 
-var settings: Settings = {
-  username: ''
-}
+var settings: Settings
 
 var root = (data: Settings) => html`
   <section>
@@ -63,12 +63,19 @@ var root = (data: Settings) => html`
   </section>
 `
 
+var update = () => {
+  electronSettings.set('settings', settings)
+  render(root(settings), el)
+}
+
 var el: HTMLElement
 document.addEventListener('DOMContentLoaded', function(event) {
-  electronSettings.set('test','value')
-
+  settings = electronSettings.get('settings')
+  if(!settings) settings = {
+    username: ''
+  }
   el = document.getElementById('slides')
-  render(root(settings), el)
+  update()
 
   const reveal = require('reveal.js/js/reveal')
   reveal.initialize()
@@ -83,7 +90,7 @@ document.addEventListener('load-key', function(e: Event) {
     function(files: string[]) {
       if (files !== undefined) {
         settings.username = files[0]
-        render(root(settings), el)
+        update()
       }
     }
   )
