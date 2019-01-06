@@ -25,7 +25,7 @@ export default class extends Vue {
     client
       .on('ready', function() {
         console.log('Client :: ready')
-        client.exec('sudo ls /root', function(err, stream) {
+        client.exec('sudo kubectl get pods --all-namespaces', function(err, stream) {
           if (err) throw err
           stream
             .on('close', function(code:any, signal:any) {
