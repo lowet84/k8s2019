@@ -17,5 +17,6 @@
       "**/.cache": true,
       "**/dist": true,
     },
+    "vetur.format.defaultFormatter.ts": "prettier",
   },
 }

@@ -1,5 +1,6 @@
 const { app, BrowserWindow, globalShortcut } = require('electron')
 require('electron-reload')(__dirname)
+var Client = require('ssh2').Client
 
 var dev = process.argv[2] === 'dev'
 
@@ -60,3 +61,7 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+exports.getSshClient = () => {
+  return new Client()
+}
