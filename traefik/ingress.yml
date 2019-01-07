@@ -9,5 +9,5 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: traefik-ingress-service
+          serviceName: traefik-ingress-service-internal
           servicePort: 8080

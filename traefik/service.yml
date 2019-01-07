@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: traefik-ingress-service
+  name: traefik-ingress-service-external
   namespace: kube-system
 spec:
   selector:
@@ -15,7 +15,17 @@ spec:
       port: 443
       nodePort: 30443
       name: https
+  type: NodePort
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service-internal
+  namespace: kube-system
+spec:
+  selector:
+    name: traefik-ingress-lb
+  ports:
     - protocol: TCP
       port: 8080
       name: webui
-  type: NodePort
