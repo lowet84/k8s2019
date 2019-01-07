@@ -4,7 +4,7 @@ metadata:
   name: demo-ingress
 spec:
   rules:
-  - host: demo.fredriklowenhamn.com
+  - host: elevate.se
     http:
       paths:
       - backend:
