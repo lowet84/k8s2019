@@ -12,5 +12,6 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
 # Traefik load balancer
-#kubectl apply -f https://raw.githubusercontent.com/containous/traefik/master/examples/k8s/traefik-rbac.yaml
-
+cd traefik
+sh start.sh
+cd ..
