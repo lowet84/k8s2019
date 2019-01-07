@@ -10,3 +10,4 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 # Weave network layer
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+
