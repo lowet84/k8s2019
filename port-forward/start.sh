@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker build -t port-forward .
+#docker build -t port-forward .
 docker rm -f port-forward-80 port-forward-443
 
 docker run --name port-forward-80 --net=host -e TO=30080 -e FROM=80 -d port-forward

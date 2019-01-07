@@ -5,7 +5,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: traefik.fredriklowenhamn.com
+  - host: traefik.elevate.se
     http:
       paths:
       - backend:

@@ -1,0 +1,5 @@
+FROM armhf/node
+
+RUN npm install mapport
+
+CMD /node_modules/.bin/mapport $FROM localhost:$TO
