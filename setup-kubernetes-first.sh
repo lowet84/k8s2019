@@ -2,6 +2,7 @@
 
 sudo kubeadm init
 mkdir -p ~/.kube
+rm ~/.kube/config
 sudo cp /etc/kubernetes/admin.conf ~/.kube/config
 sudo chown $USER ~/.kube/config
 
