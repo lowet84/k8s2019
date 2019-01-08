@@ -1,53 +1,78 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
-    <button onclick="{window.location.href='./slides.html'}">Back</button>
-    <button @click="ssh">SSH</button>
+    <v-app>
+      <v-toolbar dark color="primary">
+        <v-btn icon @click="back">
+          <v-icon>fas fa-arrow-left</v-icon>
+        </v-btn>
+
+        <v-toolbar-title class="white--text">Setup</v-toolbar-title>
+      </v-toolbar>
+      <v-content>
+        <v-container>
+          <v-text-field label="Username" v-model="settings.username"></v-text-field>
+          <v-text-field label="Host url" v-model="settings.host"></v-text-field>
+          <v-btn color="primary" @click="loadkey">Load key</v-btn>
+        </v-container>
+      </v-content>
+    </v-app>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Prop } from 'vue-typed'
+import { Component, Prop, Watch } from 'vue-typed'
 import { readFileSync } from 'fs'
-import {Client} from 'ssh2'
+import { Client } from 'ssh2'
+import { settings } from 'cluster'
+// @ts-ignore
+const { dialog } = window.require('electron').remote
+const electronSettings = window
+  // @ts-ignore
+  .require('electron')
+  .remote.require('electron-settings')
 
 @Component()
 export default class extends Vue {
-  msg = 'some message'
+  settings: Settings = <Settings>{}
 
-  ssh() {
-    var client: Client = window
-      // @ts-ignore
-      .require('electron')
-      .remote.require('./main')
-      .getSshClient()
-    client
-      .on('ready', function() {
-        console.log('Client :: ready')
-        client.exec('sudo kubectl get pods --all-namespaces', function(err, stream) {
-          if (err) throw err
-          stream
-            .on('close', function(code:any, signal:any) {
-              console.log(
-                'Stream :: close :: code: ' + code + ', signal: ' + signal
-              )
-              client.end()
-            })
-            .on('data', function(data:any) {
-              console.log('STDOUT: ' + data)
-            })
-            .stderr.on('data', function(data) {
-              console.log('STDERR: ' + data)
-            })
-        })
-      })
-      .connect({
-        host: 'fredriklowenhamn.com',
-        port: 22,
-        username: 'fredrik',
-        privateKey: require('fs').readFileSync('C:\\Users\\lowet\\Documents\\test.key')
-      })
+  @Watch('settings', true)
+  onSettingsChange(newValue: Settings, oldValue: Settings) {
+    electronSettings.set('settings', JSON.stringify(newValue))
+  }
+
+  back() {
+    window.location.href = './slides.html'
+  }
+
+  mounted() {
+    var json = electronSettings.get('settings')
+    if (json) this.settings = JSON.parse(json)
+  }
+
+  async loadkey() {
+    var context = this
+    var promise = new Promise<string>((resolve, reject) => {
+      function callback(files: string[]) {
+        if (files) {
+          var key = readFileSync(files[0], 'utf8')
+          resolve(key)
+        } else {
+          reject(new Error('showOpenDialog error.'))
+        }
+      }
+
+      dialog.showOpenDialog(
+        {
+          properties: ['openFile'],
+          filters: [{ name: 'OpenSSH Private key', extensions: ['*'] }]
+        },
+        callback
+      )
+    })
+
+    this.settings.privateKey = await promise
+    this.onSettingsChange(this.settings, undefined)
   }
 }
 </script>
