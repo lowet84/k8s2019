@@ -29,3 +29,17 @@ package_upgrade: false
 runcmd:
   - 'systemctl restart avahi-daemon'
 ```
+
+## Set up nodes
+# Master & Nodes
+clone the repo and run:
+```
+sudo sh setup-hypriot.sh
+```
+
+# Master
+Run the two kubernetes setup scripts
+```
+sudo sh setup-kubernetes-first.sh
+sh setup-kubernetes-second.sh
+```
