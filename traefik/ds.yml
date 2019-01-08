@@ -1,0 +1,27 @@
+kind: DaemonSet
+apiVersion: extensions/v1beta1
+metadata:
+  name: traefik-ingress-controller
+  namespace: kube-system
+spec:
+  selector:
+  template:
+    metadata:
+      labels:
+        name: traefik-ingress-lb
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      nodeSelector:
+        node-role.kubernetes.io/master: ""
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: traefik
+        name: traefik-ingress-lb
+        args:
+        - --api
+        - --kubernetes
+        - --logLevel=INFO
+        - --web
