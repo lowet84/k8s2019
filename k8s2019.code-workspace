@@ -4,7 +4,10 @@
       "path": "presentation"
     },
     {
-      "path": "demo"
+      "path": "kube-demo"
+    },
+    {
+      "path": "docker-demo"
     }
   ],
   "settings": {
