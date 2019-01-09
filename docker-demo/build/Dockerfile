@@ -1,3 +1,4 @@
 FROM arm32v7/node:10-slim
-ADD index.js /index.js
-CMD node index.js
+RUN mkdir /app
+ADD index.js /app/index.js
+CMD node /app/index.js
