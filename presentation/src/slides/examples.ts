@@ -23,20 +23,15 @@ var batches: { [name: string]: SshBatch } = {
         {
           command: [
             { value: 'rm -r example1 || true', hidden: true },
-            { value: 'mkdir example1' }
-          ]
-        },
-        {
-          command: [
+            { value: 'mkdir example1', hidden: true },
             { value: 'cd example1', hidden: true },
             {
               value: writeFileCommand(
                 'index.js',
                 `
-            console.log('Running demo-application on host:')
-            console.log(require('fs').readFileSync('/etc/hostname','utf8'))
+            console.log('Running demo-application on host: ' + require('fs').readFileSync('/etc/hostname','utf8'))
             `
-              )
+              ), hidden: true
             },
             { value: 'node index.js' }
           ]
@@ -44,7 +39,7 @@ var batches: { [name: string]: SshBatch } = {
         {
           command: [
             { value: 'cd example1', hidden: true },
-            { value: `${writeFileCommand('Dockerfile', info)}` },
+            { value: `${writeFileCommand('Dockerfile', info)}`, hidden: true },
             { value: 'cat Dockerfile' }
           ]
         },
