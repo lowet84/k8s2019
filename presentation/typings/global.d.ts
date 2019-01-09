@@ -4,14 +4,15 @@ interface Settings {
   privateKey: string
 }
 
-interface SshBatch {
-  items: SshCommand[]
+interface SshCommand {
+  command: SshCommandLine[]
+  results?: string[]
+  done?: boolean
+  started?: boolean,
+  verbose?: boolean
 }
 
-interface SshCommand {
-  command: string
-  results?: string[]
-  auto?: boolean
-  done?: boolean
-  started?: boolean
+interface SshCommandLine{
+  value: string,
+  hidden?: boolean
 }

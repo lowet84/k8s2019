@@ -1,5 +1,6 @@
 import { html } from 'lit-html'
 import { Client } from 'ssh2'
+import { SshBatch } from './SshBatch'
 
 var filterCommands = (commands: SshCommand[]): SshCommand[] => {
   var done = commands.filter(d => d.done) || []
@@ -11,7 +12,7 @@ var filterCommands = (commands: SshCommand[]): SshCommand[] => {
 var sshComponent = (batch: SshBatch, settings: Settings) => html`
   <div class="ssh-box">
     ${
-      filterCommands(batch.items).map(
+      filterCommands(batch.commands).map(
         item =>
           html`
             <div>
@@ -24,15 +25,12 @@ var sshComponent = (batch: SshBatch, settings: Settings) => html`
                       >
                         <div class="ssh-line">
                           ${
-                            item.command
-                              .split(/\r?\n/)
-                              .filter(d => d.length > 0)
-                              .map(
-                                line =>
-                                  html`
-                                    <div>${line}</div>
-                                  `
-                              )
+                            splitCommands(item.command).map(
+                              line =>
+                                html`
+                                  <div>${line}</div>
+                                `
+                            )
                           }
                         </div>
                       </button>
@@ -40,15 +38,12 @@ var sshComponent = (batch: SshBatch, settings: Settings) => html`
                   : html`
                       <div class="ssh-line">
                         ${
-                          item.command
-                            .split(/\r?\n/)
-                            .filter(d => d.length > 0)
-                            .map(
-                              line =>
-                                html`
-                                  <div class="started-command">${line}</div>
-                                `
-                            )
+                          splitCommands(item.command).map(
+                            line =>
+                              html`
+                                <div class="started-command">${line}</div>
+                              `
+                          )
                         }
                       </div>
                     `
@@ -69,6 +64,25 @@ var sshComponent = (batch: SshBatch, settings: Settings) => html`
   </div>
 `
 
+const splitCommands = (lines: SshCommandLine[]): string[] => {
+  var ret: string[] = lines.filter(d => !d.hidden).map(d => d.value)
+  ret.forEach(item => {
+    var split = item
+      .split(/\r?\n/)
+      .map(d => d.trim())
+      .filter(d => d.length > 0)
+    if (split.length > 1) {
+      console.log('splitting')
+      for (let index = 0; index < split.length; index++) {
+        const line = split[index]
+        ret.splice(ret.indexOf(item)+index, 0, line)
+      }
+      ret.splice(ret.indexOf(item),1)
+    }
+  })
+  return ret
+}
+
 const runCommand = (command: SshCommand, settings: Settings): void => {
   command.started = true
   document.dispatchEvent(new Event('update'))
@@ -80,18 +94,31 @@ const runCommand = (command: SshCommand, settings: Settings): void => {
 
   var handleData = (data: any) => {
     if (!command.results) command.results = []
-    var result = '' + data
-    command.results.push(result)
-    document.dispatchEvent(new Event('update'))
+    var result = ('' + data)
+      .split(/\r?\n/)
+      .map(d => d.trim())
+      .filter(d => d.length > 0)
+
+    if (result && result.length > 0) {
+      result.forEach(r => {
+        command.results.push(r)
+      })
+      document.dispatchEvent(new Event('update'))
+    }
   }
 
   conn
     .on('ready', function() {
-      conn.exec(command.command, function(err, stream) {
+      conn.exec(command.command.map(d => d.value).join('\n'), function(
+        err,
+        stream
+      ) {
         if (err) throw err
         stream
           .on('close', function() {
             command.done = true
+            if (!command.results) command.results = []
+            command.results.push('---')
             document.dispatchEvent(new Event('update'))
             conn.end()
           })
