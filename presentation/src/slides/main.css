@@ -47,6 +47,15 @@
   padding: 0 !important;
 }
 
+.image-medium {
+  height: 5em;
+  margin: 1em !important;
+  border: 0 !important;
+  background: rgb(54, 54, 54) !important;
+  box-shadow: none !important;
+  padding: 0.4em !important;
+}
+
 .image-bar {
   display: flex;
   flex-direction: row;

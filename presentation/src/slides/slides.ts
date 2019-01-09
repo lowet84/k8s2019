@@ -49,9 +49,18 @@ var root = (data: Settings) => html`
     </section>
     <section>
       <h3>Vad är Docker?</h3>
+      <div class="fragment">Alternativ till Virtual Machine</div>
       <div class="fragment">App-virtualisering</div>
       <div class="fragment">Paketering</div>
       <div class="fragment">Deployment</div>
+    </section>
+    <section>
+      <h3>Image - Container</h3>
+      <div class="fragment">Class - Object</div>
+      <div class="image-bar">
+        <img src="../assets/class.jpg" class="image-medium fragment" />
+        <img src="../assets/object.gif" class="image-medium fragment" />
+      </div>
     </section>
   </section>
 `
