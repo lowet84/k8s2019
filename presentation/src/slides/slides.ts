@@ -1,4 +1,7 @@
 import { render, html } from 'lit-html'
+import { getCode } from './code'
+import { dockerfile1 } from './docker-examples';
+
 const electronSettings = window
   // @ts-ignore
   .require('electron')
@@ -7,6 +10,11 @@ const electronSettings = window
 var settings: Settings
 
 var root = (data: Settings) => html`
+  <section data-background="#505050">
+    <h3>Docker build</h3>
+    <code>${getCode(dockerfile1)}</code>
+  </section>
+
   <section>
     <h3>Setup</h3>
     <div>
@@ -41,11 +49,11 @@ var root = (data: Settings) => html`
     </section>
     <section>
       <div>"Works on my machine"</div>
-      <img src="../assets/works-on-my-machine.jpg" class="image-large"/>
+      <img src="../assets/works-on-my-machine.jpg" class="image-large" />
     </section>
     <section>
       <h2>Docker</h2>
-      <img src="../assets/docker.svg" class="image-large"/>
+      <img src="../assets/docker.svg" class="image-large" />
     </section>
     <section>
       <h3>Vad är Docker?</h3>
@@ -61,6 +69,14 @@ var root = (data: Settings) => html`
         <img src="../assets/class.jpg" class="image-medium fragment" />
         <img src="../assets/object.gif" class="image-medium fragment" />
       </div>
+    </section>
+    <section>
+      <h3>Dockerfile</h3>
+      <div class="fragment">4 kommandon</div>
+      <div class="fragment">FROM</div>
+      <div class="fragment">ADD</div>
+      <div class="fragment">RUN</div>
+      <div class="fragment">CMD</div>
     </section>
     <section>
       <h3>Dockerfile</h3>

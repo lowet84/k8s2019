@@ -87,3 +87,21 @@ button {
   font-size: 1.4rem;
   outline: none;
 }
+
+
+
+.code{
+  display:flex;
+  flex-direction: column;
+  justify-content: left;
+  text-align: left;
+  font-size: 0.3em !important;
+  width: auto !important;
+}
+
+.center{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
