@@ -1,6 +1,7 @@
 import { render, html } from 'lit-html'
 import { getCode } from './code'
-import { dockerfile1 } from './docker-examples';
+import { dockerfile1, batches } from './examples'
+import { sshComponent } from './ssh'
 
 const electronSettings = window
   // @ts-ignore
@@ -9,10 +10,12 @@ const electronSettings = window
 
 var settings: Settings
 
-var root = (data: Settings) => html`
+var root = (data: Settings, batches: { [name: string]: SshBatch }) => html`
   <section data-background="#505050">
     <h3>Docker build</h3>
-    <code>${getCode(dockerfile1)}</code>
+    <code>${getCode(dockerfile1)}</code> ${
+      sshComponent(batches['docker1'])
+    }
   </section>
 
   <section>
@@ -88,11 +91,12 @@ var root = (data: Settings) => html`
     </section>
   </section>
 `
-
-var update = () => {
+document.addEventListener('update', event => {
+  console.log('re-rendering')
+  console.log(settings)
   electronSettings.set('settings', JSON.stringify(settings))
-  render(root(settings), el)
-}
+  render(root(settings, batches), el)
+})
 
 var el: HTMLElement
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -103,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     settings = JSON.parse(json)
   }
   el = document.getElementById('slides')
-  update()
+  document.dispatchEvent(new Event('update'))
 
   const reveal = require('reveal.js/js/reveal')
   reveal.initialize()
