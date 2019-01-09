@@ -7,7 +7,26 @@ CMD node /app/index.js
 
 var batches: { [name: string]: SshBatch } = {
   docker1: {
-    items: [{ command: 'rm -r example1' }, { command: 'mkdir example1' }]
+    items: [
+      {
+        command: `
+        rm -r example1 || true
+        mkdir example1
+        `
+      },
+      {
+        command: `
+        ls
+        ls
+        `
+      },
+      {
+        command: `
+        docker rmi lowet84/k8s2019-docker-demo || true
+        docker pull lowet84/k8s2019-docker-demo
+        `
+      }
+    ]
   }
 }
 

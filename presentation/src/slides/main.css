@@ -129,3 +129,14 @@ button {
 ::-webkit-scrollbar { 
   display: none; 
 }
+
+.started-command{
+  color: blue;
+}
+
+.ssh-line{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  text-align: left;
+}

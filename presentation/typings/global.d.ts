@@ -10,7 +10,7 @@ interface SshBatch {
 
 interface SshCommand {
   command: string
-  result?: string
+  results?: string[]
   auto?: boolean
   done?: boolean
   started?: boolean

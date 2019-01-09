@@ -10,11 +10,11 @@ const electronSettings = window
 
 var settings: Settings
 
-var root = (data: Settings, batches: { [name: string]: SshBatch }) => html`
+var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
   <section data-background="#505050">
     <h3>Docker build</h3>
     <code>${getCode(dockerfile1)}</code> ${
-      sshComponent(batches['docker1'])
+      sshComponent(batches['docker1'], settings)
     }
   </section>
 
@@ -92,10 +92,12 @@ var root = (data: Settings, batches: { [name: string]: SshBatch }) => html`
   </section>
 `
 document.addEventListener('update', event => {
-  console.log('re-rendering')
-  console.log(settings)
   electronSettings.set('settings', JSON.stringify(settings))
   render(root(settings, batches), el)
+  var sshBoxes = Object.values(document.getElementsByClassName('ssh-box'))
+  sshBoxes.forEach(box => {
+    box.scrollTop = box.scrollHeight
+  })
 })
 
 var el: HTMLElement
