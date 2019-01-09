@@ -1,8 +1,8 @@
 import { render, html } from 'lit-html'
 import { getCode } from './code'
-import { batches} from './examples'
+import { batches } from './examples'
 import { sshComponent } from './ssh'
-import { SshBatch } from './SshBatch';
+import { SshBatch } from './SshBatch'
 
 const electronSettings = window
   // @ts-ignore
@@ -12,13 +12,6 @@ const electronSettings = window
 var settings: Settings
 
 var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
-  <section data-background="#505050">
-    <h3>Docker build</h3>
-    <code>${getCode(batches['docker1'].info)}</code> ${
-      sshComponent(batches['docker1'], settings)
-    }
-  </section>
-
   <section>
     <h3>Setup</h3>
     <div>
@@ -89,6 +82,12 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
       <div class="fragment">ADD</div>
       <div class="fragment">RUN</div>
       <div class="fragment">CMD</div>
+    </section>
+    <section data-background="#505050">
+      <h3>Docker build</h3>
+      <code>${getCode(batches['docker1'].info)}</code> ${
+        sshComponent(batches['docker1'], settings)
+      }
     </section>
   </section>
 `
