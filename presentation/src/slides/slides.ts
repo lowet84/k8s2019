@@ -1,6 +1,4 @@
 import { render, html } from 'lit-html'
-// @ts-ignore
-const { dialog } = window.require('electron').remote
 const electronSettings = window
   // @ts-ignore
   .require('electron')
@@ -35,17 +33,22 @@ var root = (data: Settings) => html`
 
   <section>
     <section>
+      <h2>Vanliga deployment-problem</h2>
+      <div class="fragment">Komplicerat att installera</div>
+      <div class="fragment">Manuella steg</div>
+      <div class="fragment">Filkopiering</div>
+      <div class="fragment">Dependency-hell</div>
+    </section>
+    <section>
+      <div>"Works on my machine"</div>
+      <img src="../assets/works-on-my-machine.jpg" class="image-large"/>
+    </section>
+    <section>
       <h2>Docker</h2>
-      <img src="../assets/docker.svg" class="image-small" />
+      <img src="../assets/docker.svg" class="image-large"/>
     </section>
     <section>
       <h3>Vad är Docker?</h3>
-      <div class="fragment">App-virtualisering</div>
-      <div class="fragment">Paketering</div>
-      <div class="fragment">Deployment</div>
-    </section>
-    <section>
-      <h3>Docker run</h3>
       <div class="fragment">App-virtualisering</div>
       <div class="fragment">Paketering</div>
       <div class="fragment">Deployment</div>
@@ -71,19 +74,4 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
   const reveal = require('reveal.js/js/reveal')
   reveal.initialize()
-})
-
-document.addEventListener('load-key', function(e: Event) {
-  dialog.showOpenDialog(
-    {
-      properties: ['openFile'],
-      filters: [{ name: 'PuTTY Private key', extensions: ['ppk'] }]
-    },
-    function(files: string[]) {
-      if (files !== undefined) {
-        settings.username = files[0]
-        update()
-      }
-    }
-  )
 })

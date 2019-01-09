@@ -38,6 +38,15 @@
   padding: 0.4em !important;
 }
 
+.image-large{
+  width: 50vw;
+  height: 50vh;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
 .image-bar {
   display: flex;
   flex-direction: row;
