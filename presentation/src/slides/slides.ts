@@ -62,6 +62,14 @@ var root = (data: Settings) => html`
         <img src="../assets/object.gif" class="image-medium fragment" />
       </div>
     </section>
+    <section>
+      <h3>Dockerfile</h3>
+      <div class="fragment">4 kommandon</div>
+      <div class="fragment">FROM</div>
+      <div class="fragment">ADD</div>
+      <div class="fragment">RUN</div>
+      <div class="fragment">CMD</div>
+    </section>
   </section>
 `
 
