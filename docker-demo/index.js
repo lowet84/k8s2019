@@ -4,7 +4,7 @@ import { readFileSync } from 'fs'
 var app = express()
 
 app.get('/', function(req, res) {
-  var html = html`
+  var html = `
     <html>
       <head>
         <link
