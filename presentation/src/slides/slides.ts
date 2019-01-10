@@ -12,7 +12,17 @@ const electronSettings = window
 var settings: Settings
 
 var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
-  <section></section>
+  <section>
+    <section data-background="#505050">
+      <h3>Docker build</h3>
+      <div class="descriptive-text">index.js</div>
+      <code>${getCode(batches['dockerBuild'].files['indexjs'])}</code>
+      <div class="vertical-spacer"></div>
+      <div class="descriptive-text">Dockerfile</div>
+      <code>${getCode(batches['dockerBuild'].files['dockerfile'])}</code>
+      <div>${sshComponent(batches['dockerBuild'], settings)}</div>
+    </section>
+  </section>
   <section>
     <h3>Setup</h3>
     <div>
