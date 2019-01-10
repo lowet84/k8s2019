@@ -4,22 +4,16 @@ import { batches } from './examples'
 import { sshComponent } from './ssh'
 import { SshBatch } from './SshBatch'
 
+
 const electronSettings = window
   // @ts-ignore
   .require('electron')
   .remote.require('electron-settings')
 
 var settings: Settings
+console.log('starting')
 
 var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
-  <section>
-    <section data-background="#505050">
-      <h3>Scaling</h3>
-      <div>WiFi: elevate-kube / kubernetes</div>
-      <div>http://elevate.se:3000</div>
-      <div>${sshComponent(batches['kubernetesScaling'], settings)}</div>
-    </section>
-  </section>
   <section>
     <h3>Setup</h3>
     <div>
@@ -113,13 +107,13 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
     <section data-background="#505050">
       <h3>Docker pull & run</h3>
       <div>WiFi: elevate-kube / kubernetes</div>
-      <div>http://elevate.se:3000</div>
+      <div>http://${settings.host}:3000</div>
       <div>${sshComponent(batches['dockerPortVolume'], settings)}</div>
       <div class="webview">
         <webview
           id="example2-webview"
           class="webview-content"
-          src="http://elevate.se:3000"
+          src="http://${settings.host}:3000"
         ></webview
         ><button @click="${() => refreshWebview('example2-webview')}">
           Refresh
@@ -221,6 +215,12 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
         </div>
       </div>
     </section>
+    <section data-background="#505050">
+      <h3>Scaling</h3>
+      <button @click="${() => (window.location.href = './scaling.html')}">
+        demo scaling
+      </button>
+    </section>
   </section>
 `
 
@@ -230,9 +230,11 @@ const refreshWebview = (id: string) => {
   webview.reload()
 }
 
+var myBatches: { [name: string]: SshBatch }
 document.addEventListener('update', event => {
+  if(!myBatches) myBatches = batches(settings)
   electronSettings.set('settings', JSON.stringify(settings))
-  render(root(settings, batches), el)
+  render(root(settings, myBatches), el)
   var sshBoxes = Object.values(document.getElementsByClassName('ssh-box'))
   sshBoxes.forEach(box => {
     box.scrollTop = box.scrollHeight

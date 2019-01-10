@@ -1,0 +1,53 @@
+body {
+  background: rgb(54, 54, 54);
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.title {
+  font-size: 4em;
+  font-weight: 600;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-text {
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.v-spacer {
+  margin-top: 1em;
+}
+
+.border{
+    background: rgb(161, 161, 161);
+    padding: 0.4em;
+    border-radius: 5px;
+    color: rgb(68, 68, 68);
+}
+
+button {
+    background: #3f51b5;
+    border: none;
+    padding: 0 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: white;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    margin: 1em;
+  }
+
+webview{
+  width: 90vw;
+  height: 60vh;
+}

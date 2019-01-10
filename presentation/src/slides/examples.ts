@@ -1,4 +1,5 @@
 import { SshBatch } from './SshBatch'
+import { settings } from 'cluster'
 
 var writeFileCommand = (filename: string, content: string): string => {
   var index = 0
@@ -9,79 +10,82 @@ var writeFileCommand = (filename: string, content: string): string => {
   return lines.join('\n')
 }
 
-var batches: { [name: string]: SshBatch } = {
-  dockerBuild: new SshBatch(
-    {
-      dockerfile: `
+var batches: (
+  settings: Settings
+) => { [name: string]: SshBatch } = settings => {
+  return {
+    dockerBuild: new SshBatch(
+      {
+        dockerfile: `
   FROM arm32v7/node:10-slim
   RUN mkdir /app
   ADD index.js /app/index.js
   CMD node /app/index.js
   `,
-      indexjs: `console.log('Running demo-application on host: ' + require('fs').readFileSync('/etc/hostname','utf8'))`
-    },
-    files => [
+        indexjs: `console.log('Running demo-application on host: ' + require('fs').readFileSync('/etc/hostname','utf8'))`
+      },
+      files => [
+        {
+          command: [
+            { value: 'mkdir -p example1', hidden: true },
+            { value: 'cd example1', hidden: true },
+            {
+              value: writeFileCommand('index.js', files['indexjs']),
+              hidden: true
+            },
+            { value: 'node index.js' }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example1', hidden: true },
+            {
+              value: `${writeFileCommand('Dockerfile', files['dockerfile'])}`,
+              hidden: true
+            },
+            { value: 'cat Dockerfile' }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example1', hidden: true },
+            { value: `docker build -t docker-demo .` }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example1', hidden: true },
+            { value: `docker run --rm docker-demo` }
+          ]
+        }
+      ]
+    ),
+    dockerPortVolume: new SshBatch({}, _ => [
+      {
+        command: [{ value: 'docker pull lowet84/k8s2019-port-volume-demo' }]
+      },
       {
         command: [
-          { value: 'mkdir -p example1', hidden: true },
-          { value: 'cd example1', hidden: true },
+          { value: 'docker rm -f example2 || true', hidden: true },
           {
-            value: writeFileCommand('index.js', files['indexjs']),
-            hidden: true
-          },
-          { value: 'node index.js' }
+            value:
+              'docker run -d -p 3000:3000 --name example2 lowet84/k8s2019-port-volume-demo'
+          }
         ]
       },
       {
         command: [
-          { value: 'cd example1', hidden: true },
+          { value: 'docker rm -f example2 || true', hidden: true },
           {
-            value: `${writeFileCommand('Dockerfile', files['dockerfile'])}`,
-            hidden: true
-          },
-          { value: 'cat Dockerfile' }
-        ]
-      },
-      {
-        command: [
-          { value: 'cd example1', hidden: true },
-          { value: `docker build -t docker-demo .` }
-        ]
-      },
-      {
-        command: [
-          { value: 'cd example1', hidden: true },
-          { value: `docker run --rm docker-demo` }
+            value:
+              'docker run -d -p 3000:3000 -v /etc/hostname:/etc/hostname --name example2 lowet84/k8s2019-port-volume-demo'
+          }
         ]
       }
-    ]
-  ),
-  dockerPortVolume: new SshBatch({}, _ => [
-    {
-      command: [{ value: 'docker pull lowet84/k8s2019-port-volume-demo' }]
-    },
-    {
-      command: [
-        { value: 'docker rm -f example2 || true', hidden: true },
-        {
-          value:
-            'docker run -d -p 3000:3000 --name example2 lowet84/k8s2019-port-volume-demo'
-        }
-      ]
-    },
-    {
-      command: [
-        { value: 'docker rm -f example2 || true', hidden: true },
-        {
-          value:
-            'docker run -d -p 3000:3000 -v /etc/hostname:/etc/hostname --name example2 lowet84/k8s2019-port-volume-demo'
-        }
-      ]
-    }
-  ]),
-  kubernetesDeploy: new SshBatch(
-    {
-      deploy: `
+    ]),
+    kubernetesDeploy: new SshBatch(
+      {
+        deploy: `
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -105,40 +109,40 @@ spec:
         hostPath:
           path: /etc/hostname
   `
-    },
-    files => [
-      {
-        command: [
-          { value: 'mkdir -p example3', hidden: true },
-          { value: 'cd example3', hidden: true },
-          {
-            value: writeFileCommand('deployment.yaml', files['deploy']),
-            hidden: true
-          },
-          { value: 'cat deployment.yaml' }
-        ]
       },
+      files => [
+        {
+          command: [
+            { value: 'mkdir -p example3', hidden: true },
+            { value: 'cd example3', hidden: true },
+            {
+              value: writeFileCommand('deployment.yaml', files['deploy']),
+              hidden: true
+            },
+            { value: 'cat deployment.yaml' }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example3', hidden: true },
+            {
+              value: 'kubectl delete -f deployment.yaml >/dev/null 2>/dev/null',
+              hidden: true
+            },
+            { value: 'kubectl apply -f deployment.yaml' }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example3', hidden: true },
+            { value: 'kubectl get deploy' }
+          ]
+        }
+      ]
+    ),
+    kubernetesService: new SshBatch(
       {
-        command: [
-          { value: 'cd example3', hidden: true },
-          {
-            value: 'kubectl delete -f deployment.yaml >/dev/null 2>/dev/null',
-            hidden: true
-          },
-          { value: 'kubectl apply -f deployment.yaml' }
-        ]
-      },
-      {
-        command: [
-          { value: 'cd example3', hidden: true },
-          { value: 'kubectl get deploy' }
-        ]
-      }
-    ]
-  ),
-  kubernetesService: new SshBatch(
-    {
-      service: `
+        service: `
 kind: Service
 apiVersion: v1
 metadata:
@@ -151,47 +155,47 @@ spec:
       port: 3000
       name: web
   `
-    },
-    files => [
-      {
-        command: [
-          { value: 'mkdir -p example3', hidden: true },
-          { value: 'cd example3', hidden: true },
-          {
-            value: writeFileCommand('service.yaml', files['service']),
-            hidden: true
-          },
-          { value: 'cat service.yaml' }
-        ]
       },
+      files => [
+        {
+          command: [
+            { value: 'mkdir -p example3', hidden: true },
+            { value: 'cd example3', hidden: true },
+            {
+              value: writeFileCommand('service.yaml', files['service']),
+              hidden: true
+            },
+            { value: 'cat service.yaml' }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example3', hidden: true },
+            {
+              value: 'kubectl delete -f service.yaml >/dev/null 2>/dev/null',
+              hidden: true
+            },
+            { value: 'kubectl apply -f service.yaml' }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example3', hidden: true },
+            { value: 'kubectl get svc' }
+          ]
+        }
+      ]
+    ),
+    kubernetesIngress: new SshBatch(
       {
-        command: [
-          { value: 'cd example3', hidden: true },
-          {
-            value: 'kubectl delete -f service.yaml >/dev/null 2>/dev/null',
-            hidden: true
-          },
-          { value: 'kubectl apply -f service.yaml' }
-        ]
-      },
-      {
-        command: [
-          { value: 'cd example3', hidden: true },
-          { value: 'kubectl get svc' }
-        ]
-      }
-    ]
-  ),
-  kubernetesIngress: new SshBatch(
-    {
-      ingress: `
+        ingress: `
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: demo-ingress
 spec:
   rules:
-  - host: elevate.se
+  - host: ${settings.host}
     http:
       paths:
       - backend:
@@ -199,60 +203,75 @@ spec:
           servicePort: 3000
       
   `
-    },
-    files => [
+      },
+      files => [
+        {
+          command: [
+            { value: 'mkdir -p example3', hidden: true },
+            { value: 'cd example3', hidden: true },
+            {
+              value: writeFileCommand('ingress.yaml', files['ingress']),
+              hidden: true
+            },
+            { value: 'cat ingress.yaml' }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example3', hidden: true },
+            {
+              value: 'kubectl delete -f ingress.yaml >/dev/null 2>/dev/null',
+              hidden: true
+            },
+            { value: 'kubectl apply -f ingress.yaml' }
+          ]
+        },
+        {
+          command: [
+            { value: 'cd example3', hidden: true },
+            { value: 'kubectl get ing' }
+          ]
+        }
+      ]
+    ),
+    kubernetesScaling: new SshBatch({}, files => [
       {
         command: [
-          { value: 'mkdir -p example3', hidden: true },
-          { value: 'cd example3', hidden: true },
-          {
-            value: writeFileCommand('ingress.yaml', files['ingress']),
-            hidden: true
-          },
-          { value: 'cat ingress.yaml' }
+          { value: 'kubectl scale deploy/demo-deployment --replicas=10' }
         ]
       },
       {
         command: [
-          { value: 'cd example3', hidden: true },
-          {
-            value: 'kubectl delete -f ingress.yaml >/dev/null 2>/dev/null',
-            hidden: true
-          },
-          { value: 'kubectl apply -f ingress.yaml' }
+          { value: 'kubectl scale deploy/demo-deployment --replicas=20' }
         ]
       },
       {
         command: [
-          { value: 'cd example3', hidden: true },
-          { value: 'kubectl get ing' }
+          { value: 'kubectl scale deploy/demo-deployment --replicas=2' }
+        ]
+      },
+      {
+        command: [
+          { value: 'kubectl scale deploy/demo-deployment --replicas=5' }
+        ]
+      },
+      {
+        command: [
+          { value: 'kubectl scale deploy/demo-deployment --replicas=8' }
+        ]
+      },
+      {
+        command: [
+          { value: 'kubectl scale deploy/demo-deployment --replicas=15' }
+        ]
+      },
+      {
+        command: [
+          { value: 'kubectl scale deploy/demo-deployment --replicas=1' }
         ]
       }
-    ]
-  ),
-  kubernetesScaling: new SshBatch({}, files => [
-    {
-      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=10' }]
-    },
-    {
-      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=20' }]
-    },
-    {
-      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=2' }]
-    },
-    {
-      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=5' }]
-    },
-    {
-      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=8' }]
-    },
-    {
-      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=15' }]
-    },
-    {
-      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=1' }]
-    }
-  ])
+    ])
+  }
 }
 
 export { batches }

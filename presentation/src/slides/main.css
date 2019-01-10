@@ -135,7 +135,7 @@ button {
 }
 
 .ssh-box-medium {
-  height: 50vh;
+  height: 45vh;
 }
 
 .side-code-box{
@@ -198,4 +198,30 @@ button {
 .side-ssh {
   width: 50vw !important;
   height: 60vh !important;
+}
+
+.webview-side{
+  display: flex;
+  flex-direction: row;
+  width: 40vw !important;
+}
+
+.webview-scaling-box{
+  width: 60em !important;
+}
+
+.webview-scaling {
+  height: 55vh !important;
+  width: 100% !important;
+  margin-left: 10px;
+  border: 1px solid rgb(49, 49, 49) !important;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 0.3em !important;
+  color: black;
+  font-weight: 700 !important;
+  font-family: monospace !important;
+  overflow: auto;
+  overflow-y: hidden !important;
+  align-items: stretch;
 }
