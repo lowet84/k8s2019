@@ -29,7 +29,7 @@ app.get('/', function(req, res) {
       </head>
       <body>
         <div class="header">
-          <div>This is just a demo!</div>
+          <div>This demo is running on:</div>
           <div>${readFileSync('/etc/hostname', 'utf8')}</div>
         </div>
       </body>
