@@ -151,11 +151,32 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
       <img src="../assets/k8s.png" class="image-medium" />
     </section>
     <section>
-      <h2>Kubernetes</h2>
+      <h3>Kubernetes</h3>
       <div class="fragment">Orkestrerings-plattform</div>
       <div class="fragment">Startad av Google</div>
       <div class="fragment">Skalbarhet</div>
       <div class="fragment">Pålitlighet</div>
+    </section>
+    <section>
+      <h3>Kubernetes - struktur</h3>
+      <div class="fragment">Master</div>
+      <div class="fragment">Node</div>
+      <div class="fragment">Network layer</div>
+    </section>
+    <section>
+      <h3>Kubernetes - struktur</h3>
+      <img src="../assets/master-node.png" class="image-medium" />
+    </section>
+    <section>
+      <h3>Kubernetes - delar</h3>
+      <div class="fragment">Pod</div>
+      <div class="fragment">Deployment</div>
+      <div class="fragment">Service</div>
+      <div class="fragment">Ingress</div>
+    </section>
+    <section>
+      <h3>Kubernetes - delar</h3>
+      <img src="../assets/k8s-overview.png" class="image-large" />
     </section>
   </section>
 `
