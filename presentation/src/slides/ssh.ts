@@ -9,8 +9,8 @@ var filterCommands = (commands: SshCommand[]): SshCommand[] => {
   return done
 }
 
-var sshComponent = (batch: SshBatch, settings: Settings) => html`
-  <div class="ssh-box">
+var sshComponent = (batch: SshBatch, settings: Settings, size?: string) => html`
+  <div class="ssh-box ssh-box-${size||'small'}">
     ${
       filterCommands(batch.commands).map(
         item =>
@@ -52,7 +52,7 @@ var sshComponent = (batch: SshBatch, settings: Settings) => html`
                 item.results
                   ? item.results.map(
                       result => html`
-                        <div>${result}</div>
+                        <div>${result.split('').map(d=>d===' '?html`&nbsp;`:d)}</div>
                       `
                     )
                   : ''
@@ -96,8 +96,7 @@ const runCommand = (command: SshCommand, settings: Settings): void => {
     if (!command.results) command.results = []
     var result = ('' + data)
       .split(/\r?\n/)
-      .map(d => d.trim())
-      .filter(d => d.length > 0)
+      .filter(d => d.trim().length > 0)
 
     if (result && result.length > 0) {
       result.forEach(r => {

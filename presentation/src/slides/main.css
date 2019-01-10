@@ -113,7 +113,6 @@ button {
 .ssh-box {
   margin-left: 5vw !important;
   margin-right: 5vw !important;
-  height: 30vh;
   background: darkgray;
   border: 1px solid rgb(49, 49, 49) !important;
   border-radius: 5px;
@@ -124,6 +123,18 @@ button {
   font-weight: 700 !important;
   font-family: monospace !important;
   overflow: scroll !important;
+}
+
+.ssh-box-small {
+  height: 30vh;
+}
+
+.ssh-box-medium {
+  height: 50vh;
+}
+
+.side-code-box{
+  width: 20vw !important;
 }
 
 ::-webkit-scrollbar {
@@ -146,21 +157,21 @@ button {
   font-size: 0.4em !important;
 }
 
-.vertical-spacer{
+.vertical-spacer {
   height: 0.4em !important;
 }
 
-.webview-content{
+.webview-content {
   width: 90%;
   height: 15vh;
 }
 
-.webview{
+.webview {
   display: flex;
   flex-direction: row;
   margin-left: 5vw !important;
   margin-right: 5vw !important;
-  margin-top: 10px !important; 
+  margin-top: 10px !important;
   height: 15vh !important;
   border: 1px solid rgb(49, 49, 49) !important;
   border-radius: 5px;
@@ -169,6 +180,17 @@ button {
   color: black;
   font-weight: 700 !important;
   font-family: monospace !important;
-  overflow: auto;overflow-y: hidden !important;
+  overflow: auto;
+  overflow-y: hidden !important;
   align-items: stretch;
+}
+
+.code-to-side {
+  display: flex;
+  flex-direction: row;
+}
+
+.side-ssh {
+  width: 50vw !important;
+  height: 60vh !important;
 }

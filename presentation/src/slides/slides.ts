@@ -14,13 +14,24 @@ var settings: Settings
 var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
   <section>
     <section data-background="#505050">
-      <h3>Docker build</h3>
-      <div class="descriptive-text">index.js</div>
-      <code>${getCode(batches['dockerBuild'].files['indexjs'])}</code>
-      <div class="vertical-spacer"></div>
-      <div class="descriptive-text">Dockerfile</div>
-      <code>${getCode(batches['dockerBuild'].files['dockerfile'])}</code>
-      <div>${sshComponent(batches['dockerBuild'], settings)}</div>
+      <h3>Deployment</h3>
+      <div class="code-to-side">
+        <div class="side-code-box">
+          <div class="descriptive-text">deployment.yaml</div>
+          <code>${getCode(batches['kubernetesDeploy'].files['deploy'])}</code>
+        </div>
+        <div class="side-ssh">${sshComponent(batches['kubernetesDeploy'], settings, 'medium')}</div>
+      </div>
+    </section>
+    <section data-background="#505050">
+      <h3>Service</h3>
+      <div class="code-to-side">
+        <div class="side-code-box">
+          <div class="descriptive-text">service.yaml</div>
+          <code>${getCode(batches['kubernetesService'].files['service'])}</code>
+        </div>
+        <div class="side-ssh">${sshComponent(batches['kubernetesService'], settings, 'medium')}</div>
+      </div>
     </section>
   </section>
   <section>

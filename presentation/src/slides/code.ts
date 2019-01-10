@@ -1,4 +1,4 @@
-import { TemplateResult, html } from "lit-html";
+import { TemplateResult, html } from 'lit-html'
 
 var getCode = (code: string): TemplateResult => {
   var lines = code.split(/\r?\n/)
@@ -9,7 +9,7 @@ var getCode = (code: string): TemplateResult => {
           lines.map(
             d =>
               html`
-                ${d}<br />
+                ${d.split('').map(e=>e===' '?html`&nbsp;`:e)}<br />
               `
           )
         }
