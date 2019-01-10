@@ -1,4 +1,6 @@
-FROM arm32v7/node:10-slim
-ADD index.js /index.js
-EXPOSE 3000
-CMD node index.js
+FROM arm32v7/node:10-slim as builder
+RUN mkdir /app
+ADD package* /app/
+WORKDIR /app
+RUN npm install
+ADD index.js /app/index.js
