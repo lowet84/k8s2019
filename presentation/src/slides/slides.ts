@@ -12,6 +12,14 @@ const electronSettings = window
 var settings: Settings
 
 var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
+  <section data-background="#505050">
+    <h3>Docker pull & run</h3>
+    <div>WiFi: elevate-kube / kubernetes</div>
+    <div>http://elevate.se:3000</div>
+    <div>${sshComponent(batches['dockerPortVolume'], settings)}</div>
+    <div class="webview"><webview style="height: 15vh;" src="http://elevate.se:3000"></webview></div>
+  </section>
+
   <section>
     <h3>Setup</h3>
     <div>

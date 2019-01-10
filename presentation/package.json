@@ -6,13 +6,13 @@
   "scripts": {
     "electron:start": "electron . dev",
     "electron:build": "electron-builder",
-    "parcel:start-slides": "parcel --target=node --public-url ./ --bundle-node-modules src/slides/slides.html",
-    "parcel:start-setup": "parcel --target=node --public-url ./ --bundle-node-modules src/setup/setup.html",
+    "parcel:start-slides": "parcel --target=electron --public-url ./ --bundle-node-modules src/slides/slides.html",
+    "parcel:start-setup": "parcel --target=electron --public-url ./ --bundle-node-modules src/setup/setup.html",
     "parcel:build-slides": "parcel build --target=node --public-url ./ --bundle-node-modules --no-source-maps src/slides/slides.html",
     "parcel:build-setup": "parcel build --target=node --public-url ./ --bundle-node-modules --no-source-maps src/setup/setup.html",
     "start": "run-p -l parcel:start-slides parcel:start-setup electron:start",
     "build": "npm run parcel:build-slides && npm run parcel:build-setup && npm run electron:build",
-    "present": "npm run parcel:build && electron ."
+    "present": "npm run parcel:build-slides && npm run parcel:build-setup && electron ."
   },
   "build": {
     "files": [

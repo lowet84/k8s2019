@@ -61,11 +61,20 @@ var batches: { [name: string]: SshBatch } = {
   dockerPortVolume: new SshBatch({}, _ => [
     {
       command: [
-        { value: 'rm -r example2 || true', hidden: true },
-        { value: 'mkdir example2', hidden: true },
-        { value: 'cd example2', hidden: true },
-        { value: 'docker pull ' }
-      ]
+        { value: 'docker pull lowet84/k8s2019-port-volume-demo' }
+      ],
+    },
+    {
+      command: [
+        { value: 'docker rm -f example2 || true', hidden: true },
+        { value: 'docker run -d -p 3000:3000 --name example2 lowet84/k8s2019-port-volume-demo' }
+      ],
+    },
+    {
+      command: [
+        { value: 'docker rm -f example2 || true', hidden: true },
+        { value: 'docker run -d -p 3000:3000 -v /etc/hostname:/etc/hostname --name example2 lowet84/k8s2019-port-volume-demo' }
+      ],
     }
   ])
 }
