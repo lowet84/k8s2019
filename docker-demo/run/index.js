@@ -1,4 +1,5 @@
 import express from 'express'
+import {readFileSync} from 'fs'
 
 var app = express()
 
@@ -24,6 +25,7 @@ app.get('/', function(req, res) {
       </head>
       <body>
         <div class="header">This is just a demo!</div>
+        <div class="header">${readFileSync('/etc/hostname','utf8')}</div>
       </body>
     </html>
   `

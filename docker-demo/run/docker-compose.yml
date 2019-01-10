@@ -1,0 +1,5 @@
+version: '3'
+services:
+  demo:
+    build: .
+    image: lowet84/k8s2019-port-volume-demo
