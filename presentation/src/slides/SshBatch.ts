@@ -1,9 +1,9 @@
 export class SshBatch {
-  public info: string
+  public files: {[index:string]: string}
   public commands: SshCommand[]
 
-  constructor(info: string, commands: (info: string) => SshCommand[]) {
-    this.info = info
-    this.commands = commands(info)
+  constructor(files: {[index:string]: string}, commands: (files: {[index:string]: string}) => SshCommand[]) {
+    this.files = files
+    this.commands = commands(files)
   }
 }

@@ -58,6 +58,7 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
       <div class="fragment">App-virtualisering</div>
       <div class="fragment">Paketering</div>
       <div class="fragment">Deployment</div>
+      <div class="fragment">Sandbox</div>
     </section>
     <section>
       <h3>Image - Container</h3>
@@ -85,9 +86,12 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
     </section>
     <section data-background="#505050">
       <h3>Docker build</h3>
-      <code>${getCode(batches['docker1'].info)}</code> ${
-        sshComponent(batches['docker1'], settings)
-      }
+      <div class="descriptive-text">index.js</div>
+      <code>${getCode(batches['docker1'].files['indexjs'])}</code>
+      <div class="vertical-spacer"></div>
+      <div class="descriptive-text">Dockerfile</div>
+      <code>${getCode(batches['docker1'].files['dockerfile'])}</code>
+      <div>${sshComponent(batches['docker1'], settings)}</div>
     </section>
   </section>
 `

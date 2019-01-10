@@ -78,7 +78,7 @@ button {
   cursor: pointer;
 }
 
-.command-button{
+.command-button {
   padding: 5px;
   background: #2d503d;
   text-transform: none;
@@ -126,17 +126,26 @@ button {
   overflow: scroll !important;
 }
 
-::-webkit-scrollbar { 
-  display: none; 
+::-webkit-scrollbar {
+  display: none;
 }
 
-.started-command{
+.started-command {
   color: blue;
 }
 
-.ssh-line{
+.ssh-line {
   display: flex;
   flex-direction: column;
   justify-content: left;
   text-align: left;
+}
+
+.descriptive-text {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+  font-size: 0.4em !important;
+}
+
+.vertical-spacer{
+  height: 0.4em !important;
 }

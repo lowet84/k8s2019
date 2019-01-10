@@ -12,13 +12,16 @@ var writeFileCommand = (filename: string, content: string): string => {
 
 var batches: { [name: string]: SshBatch } = {
   docker1: new SshBatch(
-    `
+    {
+      dockerfile: `
   FROM arm32v7/node:10-slim
   RUN mkdir /app
   ADD index.js /app/index.js
   CMD node /app/index.js
   `,
-    (info: string) => {
+      indexjs:`console.log('Running demo-application on host: ' + require('fs').readFileSync('/etc/hostname','utf8'))`
+    },
+    files => {
       return [
         {
           command: [
@@ -27,11 +30,9 @@ var batches: { [name: string]: SshBatch } = {
             { value: 'cd example1', hidden: true },
             {
               value: writeFileCommand(
-                'index.js',
-                `
-            console.log('Running demo-application on host: ' + require('fs').readFileSync('/etc/hostname','utf8'))
-            `
-              ), hidden: true
+                'index.js',files['indexjs']
+              ),
+              hidden: true
             },
             { value: 'node index.js' }
           ]
@@ -39,7 +40,10 @@ var batches: { [name: string]: SshBatch } = {
         {
           command: [
             { value: 'cd example1', hidden: true },
-            { value: `${writeFileCommand('Dockerfile', info)}`, hidden: true },
+            {
+              value: `${writeFileCommand('Dockerfile', files['dockerfile'])}`,
+              hidden: true
+            },
             { value: 'cat Dockerfile' }
           ]
         },
