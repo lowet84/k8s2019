@@ -14,24 +14,10 @@ var settings: Settings
 var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
   <section>
     <section data-background="#505050">
-      <h3>Deployment</h3>
-      <div class="code-to-side">
-        <div class="side-code-box">
-          <div class="descriptive-text">deployment.yaml</div>
-          <code>${getCode(batches['kubernetesDeploy'].files['deploy'])}</code>
-        </div>
-        <div class="side-ssh">${sshComponent(batches['kubernetesDeploy'], settings, 'medium')}</div>
-      </div>
-    </section>
-    <section data-background="#505050">
-      <h3>Service</h3>
-      <div class="code-to-side">
-        <div class="side-code-box">
-          <div class="descriptive-text">service.yaml</div>
-          <code>${getCode(batches['kubernetesService'].files['service'])}</code>
-        </div>
-        <div class="side-ssh">${sshComponent(batches['kubernetesService'], settings, 'medium')}</div>
-      </div>
+      <h3>Scaling</h3>
+      <div>WiFi: elevate-kube / kubernetes</div>
+      <div>http://elevate.se:3000</div>
+      <div>${sshComponent(batches['kubernetesScaling'], settings)}</div>
     </section>
   </section>
   <section>
@@ -198,6 +184,42 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
     <section>
       <h3>Kubernetes - delar</h3>
       <img src="../assets/k8s-overview.png" class="image-large" />
+    </section>
+    <section data-background="#505050">
+      <h3>Deployment</h3>
+      <div class="code-to-side">
+        <div class="side-code-box">
+          <div class="descriptive-text">deployment.yaml</div>
+          <code>${getCode(batches['kubernetesDeploy'].files['deploy'])}</code>
+        </div>
+        <div class="side-ssh">
+          ${sshComponent(batches['kubernetesDeploy'], settings, 'medium')}
+        </div>
+      </div>
+    </section>
+    <section data-background="#505050">
+      <h3>Service</h3>
+      <div class="code-to-side">
+        <div class="side-code-box">
+          <div class="descriptive-text">service.yaml</div>
+          <code>${getCode(batches['kubernetesService'].files['service'])}</code>
+        </div>
+        <div class="side-ssh">
+          ${sshComponent(batches['kubernetesService'], settings, 'medium')}
+        </div>
+      </div>
+    </section>
+    <section data-background="#505050">
+      <h3>Ingress</h3>
+      <div class="code-to-side">
+        <div class="side-code-box">
+          <div class="descriptive-text">ingress.yaml</div>
+          <code>${getCode(batches['kubernetesIngress'].files['ingress'])}</code>
+        </div>
+        <div class="side-ssh">
+          ${sshComponent(batches['kubernetesIngress'], settings, 'medium')}
+        </div>
+      </div>
     </section>
   </section>
 `

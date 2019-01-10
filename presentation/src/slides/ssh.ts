@@ -10,7 +10,8 @@ var filterCommands = (commands: SshCommand[]): SshCommand[] => {
 }
 
 var sshComponent = (batch: SshBatch, settings: Settings, size?: string) => html`
-  <div class="ssh-box ssh-box-${size||'small'}">
+  <button class="restart-button" @click="${() => reset(batch)}">restart</button>
+  <div class="ssh-box ssh-box-${size || 'small'}">
     ${
       filterCommands(batch.commands).map(
         item =>
@@ -52,7 +53,15 @@ var sshComponent = (batch: SshBatch, settings: Settings, size?: string) => html`
                 item.results
                   ? item.results.map(
                       result => html`
-                        <div>${result.split('').map(d=>d===' '?html`&nbsp;`:d)}</div>
+                        <div>
+                          ${
+                            result.split('').map(d =>
+                              d === ' '
+                                ? html`&nbsp;`
+                                : d
+                            )
+                          }
+                        </div>
                       `
                     )
                   : ''
@@ -63,6 +72,15 @@ var sshComponent = (batch: SshBatch, settings: Settings, size?: string) => html`
     }
   </div>
 `
+
+const reset = (batch: SshBatch) => {
+  batch.commands.forEach(d => {
+    d.done = false
+    d.started = false
+    d.results = []
+    document.dispatchEvent(new Event('update'))
+  })
+}
 
 const splitCommands = (lines: SshCommandLine[]): string[] => {
   var ret: string[] = lines.filter(d => !d.hidden).map(d => d.value)
@@ -75,9 +93,9 @@ const splitCommands = (lines: SshCommandLine[]): string[] => {
       console.log('splitting')
       for (let index = 0; index < split.length; index++) {
         const line = split[index]
-        ret.splice(ret.indexOf(item)+index, 0, line)
+        ret.splice(ret.indexOf(item) + index, 0, line)
       }
-      ret.splice(ret.indexOf(item),1)
+      ret.splice(ret.indexOf(item), 1)
     }
   })
   return ret
@@ -94,9 +112,7 @@ const runCommand = (command: SshCommand, settings: Settings): void => {
 
   var handleData = (data: any) => {
     if (!command.results) command.results = []
-    var result = ('' + data)
-      .split(/\r?\n/)
-      .filter(d => d.trim().length > 0)
+    var result = ('' + data).split(/\r?\n/).filter(d => d.trim().length > 0)
 
     if (result && result.length > 0) {
       result.forEach(r => {

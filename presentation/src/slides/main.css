@@ -84,6 +84,11 @@ button {
   text-transform: none;
 }
 
+.restart-button{
+  padding: 5px;
+  background: #585858;
+}
+
 .input {
   border: none;
   resize: none;

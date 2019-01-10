@@ -121,6 +121,10 @@ spec:
       {
         command: [
           { value: 'cd example3', hidden: true },
+          {
+            value: 'kubectl delete -f deployment.yaml >/dev/null 2>/dev/null',
+            hidden: true
+          },
           { value: 'kubectl apply -f deployment.yaml' }
         ]
       },
@@ -163,6 +167,10 @@ spec:
       {
         command: [
           { value: 'cd example3', hidden: true },
+          {
+            value: 'kubectl delete -f service.yaml >/dev/null 2>/dev/null',
+            hidden: true
+          },
           { value: 'kubectl apply -f service.yaml' }
         ]
       },
@@ -173,7 +181,78 @@ spec:
         ]
       }
     ]
-  )
+  ),
+  kubernetesIngress: new SshBatch(
+    {
+      ingress: `
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: demo-ingress
+spec:
+  rules:
+  - host: elevate.se
+    http:
+      paths:
+      - backend:
+          serviceName: demo-service
+          servicePort: 3000
+      
+  `
+    },
+    files => [
+      {
+        command: [
+          { value: 'mkdir -p example3', hidden: true },
+          { value: 'cd example3', hidden: true },
+          {
+            value: writeFileCommand('ingress.yaml', files['ingress']),
+            hidden: true
+          },
+          { value: 'cat ingress.yaml' }
+        ]
+      },
+      {
+        command: [
+          { value: 'cd example3', hidden: true },
+          {
+            value: 'kubectl delete -f ingress.yaml >/dev/null 2>/dev/null',
+            hidden: true
+          },
+          { value: 'kubectl apply -f ingress.yaml' }
+        ]
+      },
+      {
+        command: [
+          { value: 'cd example3', hidden: true },
+          { value: 'kubectl get ing' }
+        ]
+      }
+    ]
+  ),
+  kubernetesScaling: new SshBatch({}, files => [
+    {
+      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=10' }]
+    },
+    {
+      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=20' }]
+    },
+    {
+      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=2' }]
+    },
+    {
+      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=5' }]
+    },
+    {
+      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=8' }]
+    },
+    {
+      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=15' }]
+    },
+    {
+      command: [{ value: 'kubectl scale deploy/demo-deployment --replicas=1' }]
+    }
+  ])
 }
 
 export { batches }

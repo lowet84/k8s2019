@@ -9,7 +9,6 @@ interface SshCommand {
   results?: string[]
   done?: boolean
   started?: boolean,
-  verbose?: boolean
 }
 
 interface SshCommandLine{
