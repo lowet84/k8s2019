@@ -233,44 +233,7 @@ spec:
           ]
         }
       ]
-    ),
-    kubernetesScaling: new SshBatch({}, files => [
-      {
-        command: [
-          { value: 'kubectl scale deploy/demo-deployment --replicas=10' }
-        ]
-      },
-      {
-        command: [
-          { value: 'kubectl scale deploy/demo-deployment --replicas=20' }
-        ]
-      },
-      {
-        command: [
-          { value: 'kubectl scale deploy/demo-deployment --replicas=2' }
-        ]
-      },
-      {
-        command: [
-          { value: 'kubectl scale deploy/demo-deployment --replicas=5' }
-        ]
-      },
-      {
-        command: [
-          { value: 'kubectl scale deploy/demo-deployment --replicas=8' }
-        ]
-      },
-      {
-        command: [
-          { value: 'kubectl scale deploy/demo-deployment --replicas=15' }
-        ]
-      },
-      {
-        command: [
-          { value: 'kubectl scale deploy/demo-deployment --replicas=1' }
-        ]
-      }
-    ])
+    )
   }
 }
 

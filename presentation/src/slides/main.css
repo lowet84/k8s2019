@@ -138,6 +138,10 @@ button {
   height: 45vh;
 }
 
+.ssh-box-smaller {
+  height: 20vh;
+}
+
 .side-code-box{
   width: 20vw !important;
 }

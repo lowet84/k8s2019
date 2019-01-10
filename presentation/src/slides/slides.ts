@@ -3,7 +3,7 @@ import { getCode } from './code'
 import { batches } from './examples'
 import { sshComponent } from './ssh'
 import { SshBatch } from './SshBatch'
-
+import { reset } from './reset'
 
 const electronSettings = window
   // @ts-ignore
@@ -11,13 +11,13 @@ const electronSettings = window
   .remote.require('electron-settings')
 
 var settings: Settings
-console.log('starting')
 
 var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
   <section>
     <h3>Setup</h3>
     <div>
       <button onclick="{window.location.href='./setup.html'}">Setup</button>
+      <button @click="${() => reset()}">Reset</button>
     </div>
   </section>
 
@@ -108,7 +108,9 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
       <h3>Docker pull & run</h3>
       <div>WiFi: elevate-kube / kubernetes</div>
       <div>http://${settings.host}:3000</div>
-      <div>${sshComponent(batches['dockerPortVolume'], settings)}</div>
+      <div>
+        ${sshComponent(batches['dockerPortVolume'], settings, 'smaller')}
+      </div>
       <div class="webview">
         <webview
           id="example2-webview"
@@ -232,7 +234,7 @@ const refreshWebview = (id: string) => {
 
 var myBatches: { [name: string]: SshBatch }
 document.addEventListener('update', event => {
-  if(!myBatches) myBatches = batches(settings)
+  if (!myBatches) myBatches = batches(settings)
   electronSettings.set('settings', JSON.stringify(settings))
   render(root(settings, myBatches), el)
   var sshBoxes = Object.values(document.getElementsByClassName('ssh-box'))
