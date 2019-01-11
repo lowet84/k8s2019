@@ -47,7 +47,9 @@ var getStyle = data => {
 
 window.onload = () => {
   const el = document.body
-
+  const min = 80
+  const max = 120
+  var interval = Math.floor(Math.random() * (max - min +1)) + min
   window.setInterval(function() {
     getColorFromServer()
     var items = Object.keys(colorData).map(d => colorData[d])
@@ -57,7 +59,7 @@ window.onload = () => {
       return acc
     }, {})
     render(template(sorted), el)
-  }, 100)
+  }, interval)
 }
 
 var getColorFromServer = async () => {
