@@ -233,7 +233,16 @@ spec:
           ]
         }
       ]
-    )
+    ),
+    reset: new SshBatch({}, files => [
+      { command: [{ value: 'docker ps' }] },
+      { command: [{ value: 'kubectl get all' }] },
+      { command: [{ value: 'docker rm -f docker-demo' }] },
+      { command: [{ value: 'docker rmi -f docker-demo' }] },
+      { command: [{ value: 'kubectl delete ing/demo-ingress' }] },
+      { command: [{ value: 'kubectl delete svc/demo-service' }] },
+      { command: [{ value: 'kubectl delete depoy/demo-deployment' }] }
+    ])
   }
 }
 

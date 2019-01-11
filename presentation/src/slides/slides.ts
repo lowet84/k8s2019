@@ -3,7 +3,9 @@ import { getCode } from './code'
 import { batches } from './examples'
 import { sshComponent } from './ssh'
 import { SshBatch } from './SshBatch'
-import { reset } from './reset'
+import { Language, getTranslation } from './Translation'
+
+var translation = getTranslation(Language.Swedish)
 
 const electronSettings = window
   // @ts-ignore
@@ -14,11 +16,16 @@ var settings: Settings
 
 var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
   <section>
-    <h3>Setup</h3>
-    <div>
-      <button onclick="{window.location.href='./setup.html'}">Setup</button>
-      <button @click="${() => reset()}">Reset</button>
-    </div>
+    <section>
+      <h3>Setup</h3>
+      <div>
+        <button onclick="{window.location.href='./setup.html'}">Setup</button>
+      </div>
+    </section>
+    <section>
+      <h3>Reset</h3>
+      <div>${sshComponent(batches['reset'], settings)}</div>
+    </section>
   </section>
 
   <section>
@@ -39,12 +46,12 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
   </section>
 
   <section>
-    <section><h2>Vanliga deployment-problem</h2></section>
+    <section><h2>${translation.commonDeploymentProblems}</h2></section>
     <section>
-      <h2>Vanliga deployment-problem</h2>
-      <div>Komplicerat att installera</div>
-      <div class="fragment">Manuella steg</div>
-      <div class="fragment">Filkopiering</div>
+      <h2>${translation.commonDeploymentProblems}</h2>
+      <div>${translation.complicatedInstall}</div>
+      <div class="fragment">${translation.manualSteps}</div>
+      <div class="fragment">${translation.fileCopy}</div>
       <div class="fragment">Dependency-hell</div>
     </section>
     <section>
@@ -56,10 +63,10 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
       <img src="../assets/docker.svg" class="image-large" />
     </section>
     <section>
-      <h3>Vad är Docker?</h3>
-      <div class="fragment">Alternativ till Virtual Machine</div>
-      <div class="fragment">App-virtualisering</div>
-      <div class="fragment">Paketering</div>
+      <h3>${translation.whatIsDocker}</h3>
+      <div class="fragment">${translation.altToVm}</div>
+      <div class="fragment">${translation.appVirt}</div>
+      <div class="fragment">${translation.packaging}</div>
       <div class="fragment">Deployment</div>
       <div class="fragment">Sandbox</div>
     </section>
@@ -73,15 +80,7 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
     </section>
     <section>
       <h3>Dockerfile</h3>
-      <div class="fragment">4 kommandon</div>
-      <div class="fragment">FROM</div>
-      <div class="fragment">ADD</div>
-      <div class="fragment">RUN</div>
-      <div class="fragment">CMD</div>
-    </section>
-    <section>
-      <h3>Dockerfile</h3>
-      <div class="fragment">4 kommandon</div>
+      <div class="fragment">${translation.fourCommands}</div>
       <div class="fragment">FROM</div>
       <div class="fragment">ADD</div>
       <div class="fragment">RUN</div>
@@ -97,8 +96,8 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
       <div>${sshComponent(batches['dockerBuild'], settings)}</div>
     </section>
     <section>
-      <h3>Livet utanför Sandboxen</h3>
-      <div class="fragment">4 kommandon till</div>
+      <h3>${translation.lifeOutsideSandbox}</h3>
+      <div class="fragment">${translation.fourMoreCommands}</div>
       <div class="fragment">Pull</div>
       <div class="fragment">Push</div>
       <div class="fragment">Port</div>
