@@ -241,7 +241,7 @@ spec:
       { command: [{ value: 'docker rmi -f docker-demo' }] },
       { command: [{ value: 'kubectl delete ing/demo-ingress' }] },
       { command: [{ value: 'kubectl delete svc/demo-service' }] },
-      { command: [{ value: 'kubectl delete depoy/demo-deployment' }] }
+      { command: [{ value: 'kubectl delete deploy/demo-deployment' }] }
     ])
   }
 }
