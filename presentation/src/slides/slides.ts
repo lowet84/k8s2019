@@ -80,7 +80,7 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
     </section>
     <section>
       <h3>Dockerfile</h3>
-      <div class="fragment">${translation.fourCommands}</div>
+      <div>${translation.fourCommands}</div>
       <div class="fragment">FROM</div>
       <div class="fragment">ADD</div>
       <div class="fragment">RUN</div>
@@ -97,7 +97,7 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
     </section>
     <section>
       <h3>${translation.lifeOutsideSandbox}</h3>
-      <div class="fragment">${translation.fourMoreCommands}</div>
+      <div>${translation.fourMoreCommands}</div>
       <div class="fragment">Pull</div>
       <div class="fragment">Push</div>
       <div class="fragment">Port</div>
@@ -154,14 +154,14 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
     </section>
     <section>
       <h3>Kubernetes</h3>
-      <div class="fragment">${translation.orchestrationPlatform}</div>
+      <div>${translation.orchestrationPlatform}</div>
       <div class="fragment">${translation.startedByGoogle}</div>
       <div class="fragment">${translation.scalability}</div>
       <div class="fragment">${translation.reliability}</div>
     </section>
     <section>
       <h3>Kubernetes - ${translation.structure}</h3>
-      <div class="fragment">Master</div>
+      <div>Master</div>
       <div class="fragment">Node</div>
       <div class="fragment">Network layer</div>
     </section>
@@ -171,7 +171,7 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
     </section>
     <section>
       <h3>Kubernetes - ${translation.parts}</h3>
-      <div class="fragment">Pod</div>
+      <div>Pod</div>
       <div class="fragment">Deployment</div>
       <div class="fragment">Service</div>
       <div class="fragment">Ingress</div>
