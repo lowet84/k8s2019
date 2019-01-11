@@ -32,6 +32,8 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
     <section>
       <h1>Docker & Kubernetes</h1>
       <h3>Fredrik Löwenhamn</h3>
+      <div>WiFi: elevate-kube / kubernetes</div>
+      <div>http://${settings.host}:3000</div>
     </section>
     <section>
       <div>This guy?</div>
@@ -66,9 +68,9 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
       <h3>${translation.whatIsDocker}</h3>
       <div class="fragment">${translation.altToVm}</div>
       <div class="fragment">${translation.appVirt}</div>
+      <div class="fragment">Sandbox</div>
       <div class="fragment">${translation.packaging}</div>
       <div class="fragment">Deployment</div>
-      <div class="fragment">Sandbox</div>
     </section>
     <section>
       <h3>Image - Container</h3>
