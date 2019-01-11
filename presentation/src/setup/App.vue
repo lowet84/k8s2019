@@ -12,10 +12,16 @@
         <v-container>
           <v-text-field label="Username" v-model="settings.username"></v-text-field>
           <v-text-field label="Host url" v-model="settings.host"></v-text-field>
-          <v-btn color="primary" @click="loadkey">Load key</v-btn>
+          <v-btn color="primary" @click="loadkey">{{settings.privateKey?'Replace key':'Load key'}}</v-btn>
+          <v-btn v-if="settings.privateKey" color="error" @click="deletekey">Delete key</v-btn>
           <v-subheader>Language</v-subheader>
           <v-radio-group v-model="settings.language">
-            <v-radio v-for="language in languages" :key="language" :label="language" :value="language"></v-radio>
+            <v-radio
+              v-for="language in languages"
+              :key="language"
+              :label="language"
+              :value="language"
+            ></v-radio>
           </v-radio-group>
         </v-container>
       </v-content>
@@ -53,6 +59,10 @@ export default class extends Vue {
   mounted() {
     var json = electronSettings.get('settings')
     if (json) this.settings = JSON.parse(json)
+  }
+
+  deletekey() {
+    this.settings.privateKey = undefined
   }
 
   async loadkey() {
