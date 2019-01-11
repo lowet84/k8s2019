@@ -55,7 +55,7 @@ var batches: (
         {
           command: [
             { value: 'cd example1', hidden: true },
-            { value: `docker run --rm docker-demo` }
+            { value: `docker run docker-demo` }
           ]
         }
       ]
@@ -66,7 +66,7 @@ var batches: (
       },
       {
         command: [
-          { value: 'docker rm -f example2 || true', hidden: true },
+          { value: 'docker rm -f example2 >/dev/null 2>/dev/null', hidden: true },
           {
             value:
               'docker run -d -p 3000:3000 --name example2 lowet84/k8s2019-port-volume-demo'
@@ -75,7 +75,7 @@ var batches: (
       },
       {
         command: [
-          { value: 'docker rm -f example2 || true', hidden: true },
+          { value: 'docker rm -f example2 >/dev/null 2>/dev/null', hidden: true },
           {
             value:
               'docker run -d -p 3000:3000 -v /etc/hostname:/etc/hostname --name example2 lowet84/k8s2019-port-volume-demo'
@@ -241,6 +241,7 @@ spec:
       { command: [{ value: 'docker rm -f docker-demo' }] },
       { command: [{ value: 'docker rm -f example2' }] },
       { command: [{ value: 'docker rmi -f docker-demo' }] },
+      { command: [{ value: 'docker system prune -f' }] },
       { command: [{ value: 'kubectl delete ing/demo-ingress' }] },
       { command: [{ value: 'kubectl delete svc/demo-service' }] },
       { command: [{ value: 'kubectl delete deploy/demo-deployment' }] },

@@ -33,7 +33,7 @@ const template = items => html`
 var getStyle = data => {
   var time: any = new Date()
   var diff = time - data.time
-  var seconds = 8
+  var seconds = 20
   var factor = (seconds * 1000 - diff + 400) / (seconds * 1000)
   if (factor > 1) factor = 1
 
