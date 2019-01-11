@@ -13,6 +13,10 @@
           <v-text-field label="Username" v-model="settings.username"></v-text-field>
           <v-text-field label="Host url" v-model="settings.host"></v-text-field>
           <v-btn color="primary" @click="loadkey">Load key</v-btn>
+          <v-subheader>Language</v-subheader>
+          <v-radio-group v-model="settings.language">
+            <v-radio v-for="language in languages" :key="language" :label="language" :value="language"></v-radio>
+          </v-radio-group>
         </v-container>
       </v-content>
     </v-app>
@@ -35,6 +39,7 @@ const electronSettings = window
 @Component()
 export default class extends Vue {
   settings: Settings = <Settings>{}
+  languages: string[] = ['Swedish', 'English']
 
   @Watch('settings', true)
   onSettingsChange(newValue: Settings, oldValue: Settings) {

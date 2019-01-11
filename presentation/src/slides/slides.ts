@@ -3,9 +3,9 @@ import { getCode } from './code'
 import { batches } from './examples'
 import { sshComponent } from './ssh'
 import { SshBatch } from './SshBatch'
-import { Language, getTranslation } from './Translation'
+import { getTranslation, Translation } from './Translation'
 
-var translation = getTranslation(Language.Swedish)
+var selectedTranslation: Translation
 
 const electronSettings = window
   // @ts-ignore
@@ -14,7 +14,7 @@ const electronSettings = window
 
 var settings: Settings
 
-var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
+var root = (settings: Settings, batches: { [name: string]: SshBatch }, translation: Translation) => html`
   <section>
     <section>
       <h3>Setup</h3>
@@ -124,21 +124,21 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
   </section>
 
   <section>
-    <section data-transition="none"><h3>Det börjar bli trångt...</h3></section>
+    <section data-transition="none"><h3>${translation.itsGettingCrowded}</h3></section>
     <section data-transition="none">
-      <h3>Det börjar bli trångt...</h3>
+      <h3>${translation.itsGettingCrowded}</h3>
       <img src="../assets/potato.jpg" class="image-large" />
     </section>
     <section data-transition="none">
-      <h3>Det börjar bli trångt...</h3>
+      <h3>${translation.itsGettingCrowded}</h3>
       <img src="../assets/server.jpg" class="image-large" />
     </section>
     <section data-transition="none">
-      <h3>Det börjar bli trångt...</h3>
+      <h3>${translation.itsGettingCrowded}</h3>
       <img src="../assets/room.jpg" class="image-large" />
     </section>
     <section data-transition="none">
-      <h3>Det börjar bli trångt...</h3>
+      <h3>${translation.itsGettingCrowded}</h3>
       <img src="../assets/facebook.jpg" class="image-large" />
     </section>
     <section>
@@ -154,30 +154,30 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }) => html`
     </section>
     <section>
       <h3>Kubernetes</h3>
-      <div class="fragment">Orkestrerings-plattform</div>
-      <div class="fragment">Startad av Google</div>
-      <div class="fragment">Skalbarhet</div>
-      <div class="fragment">Pålitlighet</div>
+      <div class="fragment">${translation.orchestrationPlatform}</div>
+      <div class="fragment">${translation.startedByGoogle}</div>
+      <div class="fragment">${translation.scalability}</div>
+      <div class="fragment">${translation.reliability}</div>
     </section>
     <section>
-      <h3>Kubernetes - struktur</h3>
+      <h3>Kubernetes - ${translation.structure}</h3>
       <div class="fragment">Master</div>
       <div class="fragment">Node</div>
       <div class="fragment">Network layer</div>
     </section>
     <section>
-      <h3>Kubernetes - struktur</h3>
+      <h3>Kubernetes - ${translation.structure}</h3>
       <img src="../assets/master-node.png" class="image-medium" />
     </section>
     <section>
-      <h3>Kubernetes - delar</h3>
+      <h3>Kubernetes - ${translation.parts}</h3>
       <div class="fragment">Pod</div>
       <div class="fragment">Deployment</div>
       <div class="fragment">Service</div>
       <div class="fragment">Ingress</div>
     </section>
     <section>
-      <h3>Kubernetes - delar</h3>
+      <h3>Kubernetes - ${translation.parts}</h3>
       <img src="../assets/k8s-overview.png" class="image-large" />
     </section>
     <section data-background="#505050">
@@ -235,7 +235,7 @@ var myBatches: { [name: string]: SshBatch }
 document.addEventListener('update', event => {
   if (!myBatches) myBatches = batches(settings)
   electronSettings.set('settings', JSON.stringify(settings))
-  render(root(settings, myBatches), el)
+  render(root(settings, myBatches, selectedTranslation), el)
   var sshBoxes = Object.values(document.getElementsByClassName('ssh-box'))
   sshBoxes.forEach(box => {
     box.scrollTop = box.scrollHeight
@@ -250,6 +250,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
   } else {
     settings = JSON.parse(json)
   }
+  selectedTranslation = getTranslation(settings.language)
+  console.log(settings.language)
   el = document.getElementById('slides')
   document.dispatchEvent(new Event('update'))
 
