@@ -39,8 +39,8 @@
 }
 
 .image-large {
-  width: 50vw;
-  height: 50vh;
+  width: 12em;
+  height: 12em;
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
