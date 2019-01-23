@@ -14,8 +14,8 @@
     "parcel:build-scaling": "parcel build --target=node --public-url ./ --bundle-node-modules --no-source-maps src/scaling/scaling.html",
     "start": "run-p -l parcel:start-slides parcel:start-scaling parcel:start-setup electron:start",
     "build": "rimraf dist && npm run parcel:build-slides && npm run parcel:build-setup && npm run parcel:build-scaling && npm run electron:build && move-cli dist/presentation.exe presentation.exe && rimraf dist",
-    "present": "npm run parcel:build-slides && npm run parcel:build-setup && npm run parcel:build-scaling && electron .",
-    "present-pre": "electron .",
+    "present:build": "npm run parcel:build-slides && npm run parcel:build-setup && npm run parcel:build-scaling",
+    "present:start": "electron .",
     "move": "move-cli 'dist/presentation 1.0.0.exe' presentation.exe"
   },
   "build": {
