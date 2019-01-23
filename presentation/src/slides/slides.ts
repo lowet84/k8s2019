@@ -33,7 +33,6 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
       <h1>Docker & Kubernetes</h1>
       <h3>Fredrik Löwenhamn</h3>
       <div>WiFi: elevate-kube / kubernetes</div>
-      <div>http://${settings.host}:3000</div>
     </section>
     <section>
       <div>This guy?</div>
@@ -90,10 +89,10 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
     </section>
     <section data-background="#505050">
       <h3>Docker build</h3>
-      <div class="descriptive-text">index.js</div>
+      <div class="black-selection descriptive-text">index.js</div>
       <code>${getCode(batches['dockerBuild'].files['indexjs'])}</code>
       <div class="vertical-spacer"></div>
-      <div class="descriptive-text">Dockerfile</div>
+      <div class="descriptive-text black-selection">Dockerfile</div>
       <code>${getCode(batches['dockerBuild'].files['dockerfile'])}</code>
       <div>${sshComponent(batches['dockerBuild'], settings)}</div>
     </section>
