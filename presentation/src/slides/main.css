@@ -108,6 +108,11 @@ button {
   width: auto !important;
 }
 
+::selection{
+  color: black !important;
+  background: white !important;
+}
+
 .center {
   display: flex;
   flex-direction: column;
