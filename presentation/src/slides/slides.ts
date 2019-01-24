@@ -14,7 +14,34 @@ const electronSettings = window
 
 var settings: Settings
 
-var root = (settings: Settings, batches: { [name: string]: SshBatch }, translation: Translation) => html`
+var root = (
+  settings: Settings,
+  batches: { [name: string]: SshBatch },
+  translation: Translation
+) => html`
+  <section>
+    <section><h1>${translation.conclusion}</h3></section>
+    <section>
+      <h2>Docker</h2>
+      <div>${translation.altToVm}</div>
+      <div>${translation.packaging}</div>
+      <div>Deplyment</div>
+    </section>
+    <section>
+      <h2>Docker</h2>
+      <div>Image - Container</div>
+      <div>Dockerfile</div>
+      <div>Port & Volume</div>
+    </section>
+    <section>
+      <h2>Kubernetes</h2>
+      <div>${translation.orchestrationPlatform}</div>
+      <div>Pod - Service - Ingress</div>
+      <div>Scaling</div>
+    </section>
+    <section><h3>${translation.questions}</h3></section>
+  </section>
+
   <section>
     <section>
       <h3>Setup</h3>
@@ -125,7 +152,9 @@ var root = (settings: Settings, batches: { [name: string]: SshBatch }, translati
   </section>
 
   <section>
-    <section data-transition="none"><h3>${translation.itsGettingCrowded}</h3></section>
+    <section data-transition="none">
+      <h3>${translation.itsGettingCrowded}</h3>
+    </section>
     <section data-transition="none">
       <h3>${translation.itsGettingCrowded}</h3>
       <img src="../assets/potato.jpg" class="image-large" />

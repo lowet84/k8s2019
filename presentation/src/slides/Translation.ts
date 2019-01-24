@@ -27,7 +27,9 @@ const swedish: Translation = {
   scalability: 'Skalbarhet',
   reliability: 'Pålitlighet',
   structure: 'struktur',
-  parts: 'delar'
+  parts: 'delar',
+  questions: 'Frågor?',
+  conclusion: 'Slutsats'
 }
 
 const english: Translation = {
@@ -48,7 +50,9 @@ const english: Translation = {
   scalability: 'Scalability',
   reliability: 'Reliability',
   structure: 'structure',
-  parts: 'parts'
+  parts: 'parts',
+  questions: 'Questions?',
+  conclusion: 'Conclusion'
 }
 
 export interface Translation {
@@ -70,4 +74,6 @@ export interface Translation {
   reliability: string
   structure: string
   parts: string
+  questions: string
+  conclusion: string
 }
