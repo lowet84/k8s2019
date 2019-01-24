@@ -236,6 +236,7 @@ spec:
     ),
     reset: new SshBatch({}, files => [
       { command: [{ value: 'kubectl get pods ' }] },
+      { command: [{ value: 'kubectl get nodes ' }] },
       { command: [{ value: 'docker ps' }] },
       { command: [{ value: 'kubectl get all' }] },
       { command: [{ value: 'docker rm -f docker-demo' }] },

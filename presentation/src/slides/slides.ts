@@ -22,13 +22,13 @@ var root = (
   <section>
     <section><h1>${translation.conclusion}</h3></section>
     <section>
-      <h2>Docker</h2>
+      <h2>${translation.whatIsDocker}</h2>
       <div>${translation.altToVm}</div>
       <div>${translation.packaging}</div>
-      <div>Deplyment</div>
+      <div>Deployment</div>
     </section>
     <section>
-      <h2>Docker</h2>
+      <h2>${translation.worksDocker}</h2>
       <div>Image - Container</div>
       <div>Dockerfile</div>
       <div>Port & Volume</div>

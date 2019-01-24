@@ -29,7 +29,8 @@ const swedish: Translation = {
   structure: 'struktur',
   parts: 'delar',
   questions: 'Frågor?',
-  conclusion: 'Slutsats'
+  conclusion: 'Slutsats',
+  worksDocker: 'Hur fungerar Docker?'
 }
 
 const english: Translation = {
@@ -52,7 +53,8 @@ const english: Translation = {
   structure: 'structure',
   parts: 'parts',
   questions: 'Questions?',
-  conclusion: 'Conclusion'
+  conclusion: 'Conclusion',
+  worksDocker: 'How does Docker work?'
 }
 
 export interface Translation {
@@ -76,4 +78,5 @@ export interface Translation {
   parts: string
   questions: string
   conclusion: string
+  worksDocker: string
 }
